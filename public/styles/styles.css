@@ -1,0 +1,246 @@
+:root { 
+    --backgroundComponent: #fff; 
+    --purple: #684be2; 
+    --blue:#46C3F0; 
+    --backgroundBody: #f7f7f9;
+    --contentWidth: 823px; 
+    --leftWidh:225px; 
+    --rightWidth:215px; 
+    --noneColor:#000; 
+    --textSmSize:12px ; 
+    --textNSize:15px ; 
+    --borderRad:12px; 
+    --halfBorderRad:6px; 
+}
+
+body {
+    display: block; 
+    width: 99vw;
+    background-color: var(--backgroundBody);
+}
+textarea { 
+    width: 100%;
+}
+/* .midContent::-webkit-scrollbar { 
+    display: none;
+} */
+
+.nav-edit { 
+    width: var(--contentWidth);
+    height: 50px; 
+    border-radius: var(--halfBorderRad);
+    box-sizing: border-box;
+    background-color: var(--purple); 
+    color: var(--backgroundComponent); 
+    /* margin-left: 0px;  */
+}
+.col-sm-2,.col-sm-9, .col-sm-1 { 
+    padding:0 2px;  
+    margin: 0px; 
+}
+.row-none>* { 
+    width: auto;
+}
+.fa { 
+    color: var(--backgroundComponent);
+}
+
+i { 
+    font-size: 24px !important;
+}
+
+.nav-item { 
+    margin-left:1 ;
+    padding: 0px 6px; 
+    opacity: 70%;
+}
+.nav-item:hover { 
+    opacity: 90%;
+}
+
+.icon-active{ 
+    opacity: 100% !important;
+}
+.container-fluid-none { 
+    padding: 0px; 
+}
+
+.navbar-expand-lg .navbar-nav .nav-link { 
+    padding-left: 5px;
+}
+.navbar .navbar-expand-lg { 
+    padding: 0px !important;; 
+}
+.text-purple { 
+    color: var(--purple) !important;; 
+}
+.text-white  { 
+    color:var(--backgroundComponentackground); 
+}
+.text-blue { 
+    color:var(--blue); 
+}
+.text-none-color { 
+    color:var(--noneColor); 
+}
+.text-none-color:hover { 
+    color:var(--purple); 
+}
+.btn-outline-purple:hover .text-purple { 
+    color:var(--backgroundComponentackground); 
+}
+
+.btn-outline-blue:hover .text-blue { 
+    color:var(--backgroundComponentackground); 
+}
+/* TODO: chỉnh font chữ cho icon  */
+#nav-logo { 
+    font-size: 30px ;
+    font-family: serif; 
+    width: var(--leftWidh); 
+    text-align: center;
+    /* margin: 0 6px; */
+    padding: 1px;  
+    background-color: var(--backgroundComponent);
+    border-radius: var(--halfBorderRad);
+}
+/* TODO: chỉnh nút sign in,up  */
+#nav-login { 
+    font-size: 30px ;
+    font-family: serif;
+    color:var(--blue); 
+    width: var(--rightWidth); 
+    text-align: center;
+    /* margin: 0 6px; */
+    padding: 1px;  
+    background-color: var(--backgroundComponent);
+    border-radius: var(--halfBorderRad);
+
+}
+
+.btn-bg-purple:hover {
+    background-color: var(--backgroundComponent) ;
+    color:var(--purple)
+}
+
+.btn-bg-blue:hover {
+    background-color: var(--blue);
+    color: var(--backgroundComponent)
+}
+
+.btn-bg-purple {
+    background-color: var(--purple);
+    color: var(--backgroundComponent)
+}
+
+.btn-bg-blue {
+    background-color: var(--blue);
+    color: var(--backgroundComponent)
+}
+.btn-bg-gray { 
+    border-radius: 5px;
+    background-color: var(--backgroundBody);
+    color:rgba(0, 0, 0, 0.25); 
+    font-style: italic;
+}
+.btn-outline-purple {
+    background-color: var(--backgroundComponent); 
+    border: var(--purple) 1px solid;
+    color: var(--purple)
+}
+.btn-outline-purple:hover { 
+    color: var(--backgroundComponent); 
+    background-color: var(--purple);
+    opacity: 90%;
+}
+.btn-outline-blue { 
+    background-color: var(--backgroundComponent); 
+    border: var(--blue) 1px solid;
+    color: var(--blue)
+}
+.btn-outline-blue:hover { 
+    color: var(--backgroundComponent); 
+    background-color: var(--blue);
+    opacity: 90%;
+}
+.border-purple { 
+    border: var(--purple) 1px solid !important;
+    border-radius: var(--halfBorderRad);
+}
+.border-blue { 
+    background-color: var(--backgroundComponent); 
+    border: var(--blue) 1px solid;
+    color: var(--blue); 
+    border-radius: var(--halfBorderRad);
+}
+/* Phần content */
+.leftBar {
+    width: var(--leftWidh);   
+    height:90vh;
+    background: var(--backgroundComponent); 
+    border-radius: var(--borderRad);
+    margin:0 3px; 
+    padding:0px;
+    box-sizing: border-box;
+}
+.midContent { 
+    width: var(--contentWidth);   
+    height:90vh;
+    background: var(--backgroundBody); 
+    border-radius: var(--borderRad);
+    /* margin:0 3px;  */
+    padding:0px;
+    box-sizing: border-box;
+}
+.rightBar { 
+    width: var(--rightWidth);   
+    height:90vh;
+    background: var(--backgroundComponent); 
+    border-radius: var(--borderRad);
+    margin:0 3px; 
+    padding:0px;
+    box-sizing: border-box;
+}
+
+/* Style cho câu hỏi  */
+
+.questionBlock { 
+    background: var(--backgroundComponent);
+    /* border: 1px var(--purple) solid; */
+    border-radius: var(--borderRad);
+    padding: 30px 40px 50px 40px; 
+    margin: 5px 25px; 
+
+}
+.newQuestion {
+    color:var(--noneColor);  
+    background: var(--backgroundComponent);
+    /* border: 1px var(--purple) solid; */
+    border-radius: var(--halfBorderRad);
+    padding: 6px 40px; 
+    margin: 4px 25px; 
+     
+}
+.authorQuestion { 
+    font-weight: 400;
+}
+.dateQuestion  {
+    font-size: var(--textSmSize);
+} 
+
+/* Sign in */
+.signin-form { 
+    border-radius: var(--borderRad);
+    border: 1px var(--purple) solid;
+
+}
+
+.avatarQuestion { 
+    background-color: var(--blue);
+    border-radius: 50%;
+    width: 45px; 
+    height: 45px; 
+}
+#homePageContent::-webkit-scrollbar {
+    display: none;
+}
