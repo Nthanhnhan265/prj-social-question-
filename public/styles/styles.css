@@ -1,6 +1,7 @@
 :root { 
     --backgroundComponent: #fff; 
     --purple: #684be2; 
+    --downVote: #cc5017; 
     --blue:#46C3F0; 
     --backgroundBody: #f7f7f9;
     --contentWidth: 823px; 
@@ -11,6 +12,7 @@
     --textNSize:15px ; 
     --borderRad:12px; 
     --halfBorderRad:6px; 
+    --bgBadges:#17a2b8; 
 }
 
 body {
@@ -41,6 +43,10 @@ textarea {
 .row-none>* { 
     width: auto;
 }
+.btnsBookmark { 
+    transition: all 10s;
+}
+
 .fa { 
     color: var(--backgroundComponent);
 }
@@ -144,25 +150,82 @@ i {
     font-style: italic;
 }
 .btn-outline-purple {
+    /* transition: color 0.3s, background-color 0.3s, opacity 0.3s;
+     */
+    transition: color 0.25s ease-in-out;
     background-color: var(--backgroundComponent); 
     border: var(--purple) 1px solid;
-    color: var(--purple)
+    color: var(--purple);
 }
+.btnsDownVote { 
+    transition: color 0.25s ease-in-out;
+    background-color: var(--backgroundComponent); 
+    border: var(--purple) 1px solid;
+    color: var(--purple);
+}
+.btnsUpVote { 
+     transition: color 0.15s ease-in-out;
+    background-color: var(--backgroundComponent); 
+    border: var(--purple) 1px solid;
+    color: var(--purple);
+}
+
 .btn-outline-purple:hover { 
-    color: var(--backgroundComponent); 
+    color: var(--backgroundComponent)!important; 
+    background-color: var(--purple)!important;
+    opacity: 90%;
+}
+
+.btnsUpVote.active { 
+    color: var(--backgroundComponent)!important; 
     background-color: var(--purple);
     opacity: 90%;
 }
+
+.btnsUpVote.active .fa { 
+    color: var(--backgroundComponent)!important; 
+}
+.btnsDownVote.active { 
+    color: var(--backgroundComponent)!important; 
+    background-color: var(--downVote)!important;
+    opacity: 90%;
+}
+
+.btnsDownVote.active .fa { 
+    color: var(--backgroundComponent)!important; 
+}
+
+
+/* .btn-outline-purple:hover .fa { 
+    color: var(--backgroundComponent)!important; 
+    opacity: 90%;
+} */
+
 .btn-outline-blue { 
+    transition: all 0.25s;
     background-color: var(--backgroundComponent); 
     border: var(--blue) 1px solid;
     color: var(--blue)
 }
 .btn-outline-blue:hover { 
-    color: var(--backgroundComponent); 
-    background-color: var(--blue);
+    color: var(--backgroundComponent)!important; 
+    background-color: var(--blue)!important;
+    border: var(--blue);
     opacity: 90%;
 }
+.btn:hover { 
+        color: var(--purple);
+        background-color: var(--backgroundComponent);
+        border-color: var(--purple);
+}
+
+.btn:hover.active { 
+    color: var(--backgroundComponent)!important; 
+    background-color: var(--purple);
+    opacity: 90%;
+}
+
+
 .border-purple { 
     border: var(--purple) 1px solid !important;
     border-radius: var(--halfBorderRad);
@@ -243,4 +306,39 @@ i {
 }
 #homePageContent::-webkit-scrollbar {
     display: none;
+}
+
+#hashtags { 
+    width: 100%; 
+}
+
+.badge { 
+    background-color: var(--bgBadges);
+    text-decoration: none;
+}
+#idDialogAnswer { 
+    max-width: 56%;
+    justify-content: center;
+    align-items: flex-start;
+    /* height: 100%; */
+
+}
+.modal-dialog-scrollable #idContainAnswer { 
+    overflow: hidden;
+    /* width: 56%!important; */
+
+}
+#idContainAnswer .modal-header { 
+    display: block;
+}
+#answersForQuestion { 
+    height:45vh
+}
+#bntAnswerClose { 
+    width:10px;
+    height:10px;
+    align-items: center;
+    padding:15px; 
+    border-radius: 50%;
+    background-color: var(--backgroundBody);
 }
