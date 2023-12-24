@@ -1,7 +1,21 @@
-<pre class='xdebug-var-dump'dir='ltr'><small>C: \wamp64\www\prj-social-question\api\send-answer.php: 8: </small>
-<b>array</b><i>(size=2)</i>
-  'id_queston' <font color='#888a85'>=&gt;</font><small>string</small> <font color='#cc0000'>'9'</font><i>(length=1)</i>
-  'content' <font color='#888a85'>=&gt;</font><small>string</small> <font color='#cc0000'>''</font><i>(length=0)</i>
-</pre><br/><font size='1'><table class='xdebug-error xe-warning'dir='ltr'border='1'cellspacing='0'cellpadding='1'><tr><th align='left'bgcolor='#f57900'colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>(!)</span> Warning: Undefined array key "id_question" in C:\wamp64\www\prj-social-question\api\send-answer.php on line <i>9</i></th></tr><tr><th align='left'bgcolor='#e9b96e'colspan='5'>Call Stack</th></tr><tr><th align='center'bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left'bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left'bgcolor='#eeeeec'>Location</th></tr><tr><td bgcolor='#eeeeec'align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0161</td><td bgcolor='#eeeeec'align='right'>365688</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='C:\wamp64\www\prj-social-question\api\send-answer.php'bgcolor='#eeeeec'>...\send-answer.php<b>: </b>0</td></tr>
-</table></font>
-[]
+<?php 
+require('../config/config.php'); 
+$questionModule=new Question(); 
+$answerModule=new Answer();
+$vote=new Vote(); 
+
+$type='upvote'; 
+$type2='downvote'; 
+$voteInfo='downvote';
+$id_answer='28';
+// if($type=="upvote" && $voteInfo=="downvote") { 
+//     //giảm số lượng vote của câu hỏi đó 
+//    $answerInfo=$answerModule->getAnswerByID($id_answer); 
+//    $answerModule->minusVote($id_answer,$voteInfo); //giảm số lượng cái cũ 
+//    $answerModule->addVote($id_answer,$type); //giảm số lượng cái cũ 
+
+// } 
+$vote->editVoteAnswer($id_answer,'nhan',$type); 
+
+
+var_dump($answerModule->getAnswerByID($id_answer));

@@ -34,10 +34,11 @@
     else if(count($votedQuestions)==1 && $votedQuestions[FIRST_POS]["type"]=='downvote') { 
         $downVotedQuestions=$votedQuestions[FIRST_POS]["voted"]; 
     }
-
+    $tags=$hashtagModule->getAllTagsIn24Hours();  
+    
     $data=[ 
         "title"=>"Home", 
-        "slot"=>"This is feature", 
+        "slot"=>$template->Render('feature-home',["tags"=>$tags]) , 
         "slot2"=>$template->Render("question",["questions"=>$questions,
         "userModule"=>$userModule,
         "upVotedQuestions"=>$upVotedQuestions,

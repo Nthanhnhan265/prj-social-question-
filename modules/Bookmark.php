@@ -8,6 +8,15 @@ class Bookmark extends Database {
         return parent::select($sql); 
      }
 
+     //Phuong thuc lay tat ca bookmark da danh dau cua user 
+     public function getAllMarkedQuestions($username ) { 
+        $sql=parent::$connection->prepare("SELECT questions.*,bookmarks.marked_by FROM `bookmarks` INNER JOIN questions
+        on bookmarks.question_id=questions.id
+        WHERE marked_by=?"); 
+        $sql->bind_param("s",$username); 
+        return parent::select($sql); 
+     }
+
      //Phương thức lấy tất cả các câu hỏi đã đánh dấu 
      public function getAllQuestionsMarked($username) { 
         $sql=parent::$connection->prepare("SELECT GROUP_CONCAT(question_id) as questions,marked_by FROM Bookmarks WHERE marked_by=?"); 

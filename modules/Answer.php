@@ -1,10 +1,29 @@
 <?php 
 class Answer extends Database { 
 
+    //Phuong thuc tra ve cau hoi qua id_answer 
+    public function getAnswerByID($id_answer) { 
+        $sql=parent::$connection->prepare("select * from answers where id_answer=?");
+        $sql->bind_param('i',$id_answer);
+        return parent::select($sql);   
+    }
     //Phương thức hiển thị tất cả trả lời của một câu hỏi
-    public function getAllAnswersByQuestion($id) { 
-        $sql=parent::$connection->prepare("select answers.*,users.firstname,users.lastname from users,answers where users.username=answers.author and id_question=?"); 
-        $sql->bind_param("i",$id); 
+    public function getAllAnswersByQuestion($username, $id) { 
+        $sql=parent::$connection->prepare("
+        SELECT questions.id as id_question, answers.*,users.firstname, users.lastname,user_voted_answer.type
+        from questions
+        INNER JOIN answers 
+        ON questions.id=answers.id_question 
+        INNER JOIN users 
+        ON answers.author=users.username
+        LEFT JOIN (
+            select * from vote_answer where username='nhan' 
+        ) as user_voted_answer
+        ON user_voted_answer.id_answer=answers.id_answer 
+        WHERE answers.id_question=23;        
+        "); 
+
+       // $sql->bind_param("si",$username,$id); 
         return parent::select($sql); 
     }
     //Phương thức thêm câu trả lời $content,$created_at,$edited_at,$status,$id_quesion
@@ -43,5 +62,43 @@ class Answer extends Database {
         }
         return true; 
     }
+  //Giảm số lượng upvote của câu trả lời  
+  public function minusVote($id_answer,$type) { 
+    try { 
+        $sql; 
+        if($type=="upvote") { 
+            $sql=parent::$connection->prepare("Update answers set upvote=upvote-1 where id_answer=?"); 
+        }else { 
+            $sql=parent::$connection->prepare("Update answers set downvote=downvote-1 where id_answer=?"); 
+        }
+        $sql->bind_param('i',$id_answer);
+        $sql->execute(); 
+        return true;  
+    }catch (Throwable $th){ 
+        echo("Có lỗi xảy ra trong Answer/minusUpVote: ".$th); 
+        return false; 
+    }
+}    
+
+//Tăng số lượng câu hỏi 
+public function addVote($id_answer,$type) { 
+    try { 
+        $sql; 
+        if($type=="upvote") { 
+            $sql=parent::$connection->prepare("Update answers set upvote=upvote+1 where id_answer=?"); 
+        }else { 
+            $sql=parent::$connection->prepare("Update answers set downvote=downvote+1 where id_answer=?"); 
+        }
+        $sql->bind_param('i',$id_answer);
+        $sql->execute(); 
+        return true;  
+    }catch (Throwable $th){ 
+        echo("Có lỗi xảy ra trong Answer/addVote: ".$th); 
+        return false; 
+    }
+}
+    
+    
+
 
 }

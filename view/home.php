@@ -214,7 +214,7 @@
   <div class="container-fluid container-fluid-none">
     <div class="row">
       <!-- Phần thanh bên trái  -->
-      <div class="col-2-sm leftBar">
+      <div class="col-2-sm leftBar overflow-auto">
         <?php
         if (!empty($slot)) {
           echo ($slot);

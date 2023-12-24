@@ -10,6 +10,11 @@ class HashTag extends Database {
         return parent::select($sql); 
     }
 
+    //Phương thức lấy tất cả tags được gán nhiều nhất trong 24h qua 
+    public function getAllTagsIn24Hours () { 
+        $sql=parent::$connection->prepare("SELECT hashtags.*,hashtag_question.created_at, count(hashtag_question.id_hashtag) as count FROM `hashtag_question`,`hashtags` WHERE hashtag_question.created_at >date_sub(now(),INTERVAL 24 HOUR) and hashtag_question.id_hashtag=hashtags.id_hashtag GROUP BY hashtag_question.id_hashtag ORDER BY count desc;"); 
+        return parent::select($sql); 
+    }
 
     //Phương thức lấy tất cả tags của câu hỏi 
     public function getAllTagsOfQuestion($id_question) { 

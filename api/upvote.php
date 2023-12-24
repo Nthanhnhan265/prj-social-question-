@@ -21,7 +21,12 @@
                 $response=["success"=>"ok","upvote"=>$questionInfo["upvote"]]; 
                 header("Content-Type:application/json");
                 echo(json_encode($response)); 
-            }else { 
+            }
+            
+            
+            
+            else { 
+                http_response_code(404);
                 header("Content-Type:application/json");
                 echo(json_encode(["success"=>"ok"])); 
             }
