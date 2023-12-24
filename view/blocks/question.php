@@ -10,7 +10,6 @@
 
 </div>
 
-
 <?php foreach($questions as $question) { ?> 
 
 <div class="questionBlock mb-2"> 
