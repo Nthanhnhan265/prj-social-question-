@@ -10,7 +10,9 @@
     $bookmarkModule=new Bookmark(); 
     $questions=$questionModule->getAllQuestions(); 
     $hashtagModule=new HashTag(); 
-    
+    $imageModule=new Images(); 
+
+    $imagesList=$imageModule->getAllImages('question');
     $tagsOfQuestions=$hashtagModule->getAllTagsAndQuestions();
     $upVotedQuestions=''; 
     $downVotedQuestions=''; 
@@ -45,6 +47,8 @@
         "downVotedQuestions"=>$downVotedQuestions,
         "markedQuestions"=>$markedQuestions,
         "tagsOfQuestions"=>$tagsOfQuestions,        
+        "imagesList"=>$imagesList
+        
         ]
         ) 
     ]; 

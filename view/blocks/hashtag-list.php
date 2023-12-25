@@ -1,14 +1,21 @@
 <!-- ấn để mở câu nơi chọn câu hỏi -->
-<div class="newQuestion">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-1 avatarQuesion"><img src="/images/N-0.webp" alt="" srcset=""></div>
-      <div class="col-sm-11 btn-bg-gray py-1" id="addQuestion" data-bs-toggle="modal" data-bs-target="#addQuestion">Have
-        a question? Ask now . . .</div>
-    </div>
-  </div>
+<div class="hashtagInfo" >
 
+  <a href='hashtag.php?tag=<?php echo $tag ?>'  class="badge badge-title d-inline-flex py-1">
+    <span class="material-symbols-outlined pe-2">sell</span>
+    <?php echo ($tag); ?>
+    <!-- <span class="material-symbols-outlined ms-1" onclick="load()">
+      close
+    </span> -->
+  </a>
 </div>
+<span class="ps-2" style="opacity:70%"><?php 
+if(!empty($questions)) { 
+  echo count($questions); 
+  
+}
+  ?> 
+  questions</span>
 
 
 <?php foreach ($questions as $question) { ?>
@@ -69,15 +76,12 @@
     <!-- IMGs -->
     <div class="imgsQuestion mb-1 mt-4 ms-3">
       <?php
-      if (!empty($imagesList)) {
-        for ($i = 0; $i < count($imagesList); $i++) {
-          //  echo($imagesList[$i]['imgs']$question['id']);
-          if ($imagesList[$i]['id_question_answer'] === $question['id']) {
-            $srcImgs = explode(',', $imagesList[$i]['imgs']);
-            foreach ($srcImgs as $srcImg) {
-              echo ('<a class="imgsList"><img class="imgsList" src="' . 'images/' . $srcImg . '"></a>');
-            }
-
+      for ($i = 0; $i < count($imagesList); $i++) {
+        //  echo($imagesList[$i]['imgs']$question['id']);
+        if ($imagesList[$i]['id_question_answer'] === $question['id']) {
+          $srcImgs = explode(',', $imagesList[$i]['imgs']);
+          foreach ($srcImgs as $srcImg) {
+            echo ('<a class="imgsList"><img class="imgsList" src="' . 'images/' . $srcImg . '"></a>');
           }
 
         }
@@ -136,6 +140,17 @@
   </div>
 
 <?php } ?>
+
+<?php 
+  if(empty($questions)) { 
+    echo('<div id="notify-center" class="d-flex me-2">
+    <span class="material-symbols-outlined">
+sentiment_dissatisfied
+</span>No questions available</div>'); 
+  }
+
+?> 
+
 <!-- ấn để hiển thị trả lời câu hỏi -->
 <div class="modal fade" id="showAnswer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="idDialogAnswer">

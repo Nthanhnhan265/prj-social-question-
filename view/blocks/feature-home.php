@@ -4,7 +4,7 @@
     $i = 0;
     foreach ($tags as $tag) {
         $i++;
-        echo ('<a href="#" class="badge badge-warning me-1 mb-1">' . $tag['name'] . '<span class="circleForCount">' . $tag['count'] . '</span></a>');
+        echo ('<a href="hashtag.php" class="badge badge-warning me-1 mb-1">' . $tag['name'] . '<span class="circleForCount">' . $tag['count'] . '</span></a>');
         if ($i == 5) {
             break;
         }

@@ -328,7 +328,14 @@ i {
     background-color: var(--bgBadges);
     text-decoration: none;
 }
-
+.badge-title { 
+    margin-left:5px;
+    margin-bottom: 5px;
+    text-decoration: none;
+    border-radius: 6px;
+    background-color:var(--bdBadgeWarning); 
+    font-size: 1.1em;
+}
 .badge-warning { 
     background-color: var(--bdBadgeWarning);
     text-decoration: none;
@@ -369,4 +376,14 @@ i {
     margin-left: 4px;
     padding:2px 5px;
     border-radius: 3px;
+}
+
+.imgsList {
+    margin-right: 25px;
+    height: 250px!important;
+}
+#notify-center {
+    margin: 0 auto; 
+    opacity: 60%;
+
 }

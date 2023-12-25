@@ -29,7 +29,7 @@
         <div class="col-sm-2">
           <!-- Logo  -->
           <div id="nav-logo">
-            <a href="#" class="text-decoration-none">Askany</a>
+            <a href="index.php" class="text-decoration-none">Askany</a>
           </div>
         </div>
         <div class="col-sm-9">
@@ -90,7 +90,7 @@
   </nav>
   <!-- Modal add question  -->
   <div class="modal fade" id="addQuestion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form action="process/addquestion.php" method="post">
+    <form action="process/addquestion.php" method="post" enctype="multipart/form-data">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -100,12 +100,20 @@
           <div class="modal-body">
             <input type="hidden" name="author" id="author" value="<?php echo ($_COOKIE["username"]); ?>">
             <textarea name="content" id="content" rows="5" placeholder="Type your question"></textarea>
+            <label for="imageInput">
+              <span class="material-symbols-outlined">
+                imagesmode
+              </span>
+
+            </label>
+            <input type="file" name="images[]" id="imageInput" class="none" accept=".jpg, .png, .jpeg|image/*" multiple>
             <hr>
             <label for="hashtags" class="d-flex align-items-center pb-1">
               <span class="material-symbols-outlined pe-2">sell</span>hashtags
             </label>
 
             <input type="text" name="hashtags" id="hashtags">
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-purple" data-bs-dismiss="modal">Cancel</button>

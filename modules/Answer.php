@@ -17,13 +17,13 @@ class Answer extends Database {
         INNER JOIN users 
         ON answers.author=users.username
         LEFT JOIN (
-            select * from vote_answer where username='nhan' 
+            select * from vote_answer where username=? 
         ) as user_voted_answer
         ON user_voted_answer.id_answer=answers.id_answer 
-        WHERE answers.id_question=23;        
+        WHERE answers.id_question=?;        
         "); 
 
-       // $sql->bind_param("si",$username,$id); 
+       $sql->bind_param("si",$username,$id); 
         return parent::select($sql); 
     }
     //Phương thức thêm câu trả lời $content,$created_at,$edited_at,$status,$id_quesion

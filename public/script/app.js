@@ -16,13 +16,17 @@ const minute=1;
 const second=2;
 const date=0; 
 const hours=1; 
-alert(); 
+
+function load() { 
+  location.replace("https://www.w3schools.com")
+}
+
 function loadAnswerToModal(data) {
   data.forEach(element => {
     let strDateTime=element['created_at'].split(' ');
      
     let  dateFormat=strDateTime[date].split('-'); 
-    let hoursFormat=strDateTime[hours].split(':'); 
+    let hoursFormat=strDateTime[hours];
     answersForQuestion.innerHTML += `
         <div class="answer row pb-5">
         <!-- phần avartar -->
@@ -37,7 +41,7 @@ function loadAnswerToModal(data) {
           </div>
           <div class="dateAnswer">
             ${
-              dateFormat[day]+"/"+dateFormat[month]+"/"+dateFormat[year]+" At "+hoursFormat
+              dateFormat[day]+"/"+dateFormat[month]+"/"+dateFormat[year]+" "+hoursFormat
             }
           </div>
     

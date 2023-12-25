@@ -6,6 +6,15 @@ class Question extends Database {
         $sql=parent::$connection->prepare("select * from questions order by id desc"); 
         return parent::select($sql); 
     }
+
+    
+    //Phương thức trả về câu hỏi có chứa hashtag 
+    public function getAllQuestionByTag($tagName){ 
+        $sql =parent::$connection->prepare("SELECT questions.*,count(*) as valuesOfQuestion FROM `hashtag_question`,questions,hashtags where hashtag_question.id_hashtag=hashtags.id_hashtag and questions.id=hashtag_question.id_question and hashtags.name=?");
+        $sql->bind_param('s',$tagName);
+        return parent::select($sql);  
+    }
+
     //Phương thức chèn câu hỏi 
     public function insertQuestion($content,$type,$created_at,$edit_at,$author) { 
         try {
