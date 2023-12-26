@@ -2,7 +2,7 @@
 class Template { 
     public function View($view,$data=[] ) { 
         extract($data); 
-        include(BASE_PATH."./view/$view.php");
+        include(BASE_PATH."../view/$view.php");
         
     }
     public function Render($view,$data=[]) { 

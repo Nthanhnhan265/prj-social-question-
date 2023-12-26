@@ -11,3 +11,5 @@
     ]; 
 
     $template->View("home",$data); 
+
+    ?>
