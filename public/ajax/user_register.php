@@ -28,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (in_array($img_correct_ext, $allow)) {
         if ($size < 500000) {
             date_default_timezone_set('Asia/Ho_Chi_Minh');
-            $date = date("d/m/Y");
-            $hour = date("h:i:sa");
-            $joinAt = $date . ' ' . $hour;
-            if ($userModule->SignUp($username, $firstname, $lastname, $password, $joinAt, $img)) {
+            $date = date("Y/m/d");
+            // $hour = date("h:i:sa");
+            // $joinAt = $date . ' ' . $hour;
+            if ($userModule->SignUp($username, $firstname, $lastname, $password,  $date , $img)) {
                 move_uploaded_file($tmp_name, $path);
                 // echo '<script>alert("Đăng ký thành công!"); window.location.href="./index.php";</script>';
                 // echo 'You have successfully Registed!';

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -142,7 +143,6 @@
 
           ?>
 
-
         </div>
       </div>
     </div>
@@ -185,6 +185,20 @@
             <button type="button" class="btn btn-outline-purple" data-bs-dismiss="modal">Cancel</button>
             <button type="submit" class="btn btn-bg-blue">Add question</button>
           </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+
+
+  <!-- Modal sign in  -->
+  <div class="modal fade" id="sign-in" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body mt-5">
+          <!-- <button type="button" class="btn-close text-end" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
       </div>
 
@@ -307,6 +321,7 @@
 
   <!-- Phần nội dung -->
   <div class="container-fluid container-fluid-none">
+    <div class="row">
     <div class="row">
       <!-- Phần thanh bên trái  -->
       <div class="col-2-sm leftBar overflow-auto">

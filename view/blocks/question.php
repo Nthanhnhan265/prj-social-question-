@@ -180,11 +180,11 @@
           </h5>
           <!-- Vote -->
           <div class="featureQuestion mt-4 ms-2" id="updownvote<?php echo ($question['id']); ?>">
-            <button class="btn btn-outline-purple-nohover py-1 d-inline btnsUpVote">
+            <button class="btn btn-outline-purple-nohover py-1 d-inline btnsUpVote" id='idUpvoteQuestion'>
               <p class="m-0"><i class="fa fa-angle-up text-purple" aria-hidden="true"></i>
                 Upvote <span id="upvoteValueModal">0</span></p>
             </button>
-            <button class="btn btn-outline-purple-nohover py-1 btnsDownVote">
+            <button class="btn btn-outline-purple-nohover py-1 btnsDownVote" id='idDownvoteQuestion'>
               <p class="m-0"><i class="fa fa-angle-down text-purple " aria-hidden="true"></i>
               </p>
             </button>
