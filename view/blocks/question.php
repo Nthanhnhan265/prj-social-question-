@@ -6,7 +6,17 @@
     <img src="path/to/image1.jpg" alt="Image 1" />
   </a> -->
       <div class="col-sm-1 avatarQuestion">
-        <img src="images/default.png" alt="" srcset=""></div>
+        <img src="<?php if(!empty($_SESSION['username'])){ 
+          $user = $userModule->getUserByUsername($_SESSION['username']);
+          if(!empty($user['avatar'])) {
+            echo('avatar/'.$user['avatar']); 
+          } else { 
+            echo('images/default.png'); 
+
+          }
+
+        } ?>" alt="" srcset="">
+      </div>
       <div class="col-sm-11 btn-bg-gray py-1" id="addQuestion" data-bs-toggle="modal" data-bs-target="<?php
       //kiểm tra nếu người dùng chưa đăng nhập thì mở modal đăng nhập 
       if (!empty($_SESSION['username'])) {
@@ -21,15 +31,35 @@
 
 </div>
 
-<?php foreach ($questions as $question) { ?>
+<?php 
+
+if(empty($questions)) { 
+  echo('<h6 style="opacity:50%" class="d-flex align-items-center ps-5 pt-2"><span class="pe-2 material-symbols-outlined">
+  sentiment_very_dissatisfied
+  </span>No questions available</h6>'); 
+}
+foreach ($questions as $question) { ?>
 
   <div class="questionBlock mb-2" id="idQuestion<?php echo ($question["id"]); ?>">
     <div class="row infoQuestion mb-3">
       <!-- phần avartar -->
       <div class="col-1 ps-0">
         <div class="avatarQuestion">
-          <img src="images/default.png" alt="" srcset="">
+        <img src="
+        <?php if(!empty($_SESSION['username'])){ 
+          $user = $userModule->getUserByUsername($question["author"]);
+          if(!empty($user['avatar'])) {
+            echo('avatar/'.$user['avatar']); 
+          } else { 
+            echo('images/default.png'); 
 
+          }
+
+        }else { 
+          echo('images/default.png'); 
+
+        }
+         ?>" alt="" srcset="">
         </div>
 
       </div>

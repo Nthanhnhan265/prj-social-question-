@@ -1,5 +1,13 @@
 <?php 
 class Answer extends Database { 
+
+    //Phương thức lấy tất cả câu trả lời của người dùng 
+    public function getAllAnswersByUser($username) {
+        $sql=parent::$connection->prepare("SELECT answers.*, questions.id,questions.content as question, users.lastname,users.firstname,users.avatar FROM `answers` INNER JOIN questions on answers.id_question=questions.id INNER JOIN users on users.username=answers.author where answers.author=?;
+        ");
+        $sql->bind_param('s',$username);
+        return parent::select($sql);  
+    }
     //Lấy câu trả lời trong 1 trang 
     public function getAnswerInPage($startPage,$perPage) { 
         $sql=parent::$connection->prepare("select * from answers limit $startPage,$perPage");

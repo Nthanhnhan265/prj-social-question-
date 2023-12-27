@@ -1,6 +1,13 @@
 <?php 
 class Question extends Database { 
 
+    //PHương thức lấy câu hỏi đã tạo bởi người dùng 
+    public function getQuestionsByUser($username) { 
+        $sql=parent::$connection->prepare("select * from questions where author=?");
+        $sql->bind_param("s",$username);  
+        return parent::select($sql); 
+    }
+
     //Phương thức lấy câu hỏi trong trang  
     public function getQuestionsInPage($startPage, $numOfPage) { 
         $sql=parent::$connection->prepare("select * from questions limit $startPage,$numOfPage");
