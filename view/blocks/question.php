@@ -45,7 +45,8 @@ foreach ($questions as $question) { ?>
       <!-- phần avartar -->
       <div class="col-1 ps-0">
         <div class="avatarQuestion">
-        <img src="<?php if(!empty($_SESSION['username'])){ 
+        <img src="
+        <?php if(!empty($_SESSION['username'])){ 
           $user = $userModule->getUserByUsername($question["author"]);
           if(!empty($user['avatar'])) {
             echo('avatar/'.$user['avatar']); 
@@ -54,7 +55,11 @@ foreach ($questions as $question) { ?>
 
           }
 
-        } ?>" alt="" srcset="">
+        }else { 
+          echo('images/default.png'); 
+
+        }
+         ?>" alt="" srcset="">
         </div>
 
       </div>
