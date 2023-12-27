@@ -15,8 +15,6 @@
 
 
     $userModule=new User(); 
-    $template=new Template(); 
-    $userModule=new User(); 
     $voteModule=new Vote(); 
     $bookmarkModule=new Bookmark(); 
     $hashtagModule=new HashTag(); 
@@ -26,7 +24,6 @@
     $downVotedQuestions=''; 
     $votedQuestions; 
     $markedQuestions=[]; 
-    //Chưa Ràng buộc đăng nhập 
     if(!empty($_SESSION['username']) ) {
         $votedQuestions=$voteModule->getAllVotedQuestionsByUsername($_SESSION["username"]); 
         $markedQuestions=$bookmarkModule->getAllQuestionsMarked($_SESSION["username"]); 

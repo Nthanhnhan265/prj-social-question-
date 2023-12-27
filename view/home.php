@@ -161,8 +161,8 @@
           <div class="modal-body">
 
             <input type="hidden" name="author" id="author" value="<?php
-            if (!empty($_COOKIE["username"])) {
-              echo ($_COOKIE["username"]);
+            if (!empty($_SESSION["username"])) {
+              echo ($_SESSION["username"]);
             }
             ?>">
             <textarea name="content" id="content" rows="5" placeholder="Type your question"></textarea>
@@ -329,7 +329,7 @@
       </div>
       <!-- Phần footer -->
       <div class="col-1-sm rightBar text-center">
-        This is footer
+        <!-- This is footer -->
       </div>
     </div>
   </div>

@@ -9,8 +9,12 @@
         $questionModule=new Question(); 
         $userModule=new User(); 
         $voteModule=new Vote(); 
-        $bookmarkModule=new Bookmark(); 
-        $questions=[0=>$questionModule->getQuestionByID($q)]; 
+        $bookmarkModule=new Bookmark();
+        $question=$questionModule->getQuestionByID($q); 
+        $questions=[]; 
+        if(!empty($question)) { 
+            $questions=[0=>$question]; 
+        } 
         $hashtagModule=new HashTag(); 
         $imageModule=new Images(); 
         $top3Questions=$questionModule->getTopQuestions(); 

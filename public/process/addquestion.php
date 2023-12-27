@@ -17,12 +17,12 @@ if (!empty($_POST["hashtags"])) {
 
 if (!empty($_POST["author"])) {
     $author = $_POST["author"];
-    echo ("checked");
+    echo ("checked author");
 }
 
 if (!empty($_POST["content"])) {
     $content = $_POST["content"];
-    echo ("checked");
+    echo ("checked content");
 
 }
 
@@ -64,7 +64,7 @@ if (!empty($author) && !empty($content)) {
             
         }
         $imageModule->inserstImages($savedImaged, $temp, 'question');
-        header("location: http://localhost/prj-social-question/public/index.php");
+        header("location: http://localhost/prj-social-question-/public/index.php");
     // echo($author.$content); 
 } else {
     echo ("<h1 style='text-aligns:center'>Thêm thất bại</h1>");
