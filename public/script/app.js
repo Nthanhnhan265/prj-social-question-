@@ -4,6 +4,8 @@ const idAuthorQuestion = document.querySelector('#idAuthorQuestion');
 const idDateQuestion = document.querySelector('#idDateQuestion');
 const idHeadingQuestion = document.querySelector('#idHeadingQuestion');
 const idUpvoteValue=document.querySelector('#upvoteValueModal');
+const idUpvoteQuestion=document.querySelector('#idUpvoteQuestion');
+const idDownvoteQuestion=document.querySelector('#idDownvoteQuestion');  
 const btnAnswer = document.querySelector('#idBtnAnswer');
 let selectedQuestion = "";
 let btnsUpvoteAnswer;
@@ -38,7 +40,7 @@ function loadAnswerToModal(data) {
         </div>
         <div class="col-10">
           <div class="authorAnswer">
-            ${element["firstname"]} ${element["lastname"]}
+          ${element["lastname"]} ${element["firstname"]} 
           </div>
           <div class="dateAnswer">
             ${
@@ -169,7 +171,21 @@ btnsShowAnswer.forEach(element => {
     idAuthorQuestion.textContent = questionInfo.querySelector('.authorQuestion').textContent;
     idDateQuestion.textContent = questionInfo.querySelector('.dateQuestion').textContent;
     idHeadingQuestion.textContent = questionInfo.querySelector('.contentQuestion').textContent;
-    idUpvoteValue.textContent=questionInfo.querySelector('#upvoteValue').textContent; 
+    idUpvoteValue.textContent=questionInfo.querySelector('.upvoteValue').textContent; 
+    // alert(questionInfo.querySelector('.btnsUpVote'));
+    //Hiển thị trạng thái lên modal 
+    if(questionInfo.querySelector('.btnsUpVote').classList.contains('active')) { 
+      idUpvoteQuestion.classList.add('active');
+    }
+    else if(questionInfo.querySelector('.btnsDownVote').classList.contains('active')) { 
+      idDownvoteQuestion.classList.add('active');
+
+    }else { 
+      idUpvoteQuestion.classList.remove('active');
+      idDownvoteQuestion.classList.remove('active');
+    }
+
+    // alert(questionInfo.querySelector('.upvoteValue')); 
     answersForQuestion.innerHTML = "";
     //lấy câu trả lời của câu hỏi từ server 
     async function GetAnswer() {
