@@ -21,7 +21,16 @@
             }
             return false;
         }
-
+        //Phương thức lấy tất cả users trong trang 
+        public function getUsersInPage($startPage,$perPage) { 
+            $sql=parent::$connection->prepare("SELECT * FROM USERS limit $startPage,$perPage");
+            return parent::select($sql ) ;
+        }
+        //Phương thức lấy tất cả users 
+        public function getAllUsers() { 
+            $sql=parent::$connection->prepare("SELECT * FROM USERS");
+            return parent::select($sql ) ;
+        }
         //Phương thức đăng kí tài khoản (Insert user mới vào trong DB)
         public function SignUp($username, $firstName, $lastName, $password, $joinAt, $avatar)
         {

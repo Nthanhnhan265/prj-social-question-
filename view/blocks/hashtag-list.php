@@ -1,32 +1,30 @@
 <!-- ấn để mở câu nơi chọn câu hỏi -->
-<div class="newQuestion">
-  <div class="container">
-    <div class="row">
-      <!--  <a href="path/to/image1.jpg" data-fancybox="gallery" data-caption="Image 1">
-    <img src="path/to/image1.jpg" alt="Image 1" />
-  </a> -->
-      <div class="col-sm-1 avatarQuestion">
-        <img src="images/default.png" alt="" srcset=""></div>
-      <div class="col-sm-11 btn-bg-gray py-1" id="addQuestion" data-bs-toggle="modal" data-bs-target="<?php
-      //kiểm tra nếu người dùng chưa đăng nhập thì mở modal đăng nhập 
-      if (!empty($_SESSION['username'])) {
-        echo ('#addQuestion');
-      } else {
-        echo ('#sign-in');
-      }
-      ?>">Have
-        a question? Ask now . . .</div>
-    </div>
-  </div>
+<div class="hashtagInfo" >
 
+  <a href='hashtag.php?tag=<?php echo $tag ?>'  class="badge badge-title d-inline-flex py-1">
+    <span class="material-symbols-outlined pe-2">sell</span>
+    <?php echo ($tag); ?>
+    <!-- <span class="material-symbols-outlined ms-1" onclick="load()">
+      close
+    </span> -->
+  </a>
 </div>
+<span class="ps-2" style="opacity:70%"><?php 
+if(!empty($questions)) { 
+  echo count($questions); 
+  
+}
+  ?> 
+  questions</span>
 
-<?php foreach ($questions as $question) { ?>
+
+<?php
+foreach ($questions as $question) { ?>
 
   <div class="questionBlock mb-2" id="idQuestion<?php echo ($question["id"]); ?>">
     <div class="row infoQuestion mb-3">
       <!-- phần avartar -->
-      <div class="col-1 ps-0">
+      <div class="col-1">
         <div class="avatarQuestion">
           <img src="images/default.png" alt="" srcset="">
 
@@ -54,7 +52,7 @@
       <div class="col-1">
         <img width="23" height="23" src="https://img.icons8.com/ios/50/forward-arrow.png" alt="forward-arrow" />
         <img width="24" height="24" src="https://img.icons8.com/windows/50/<?php
-        if (!empty($markedQuestions) && in_array($question['id'], explode(',', $markedQuestions["questions"]))) {
+        if ( !empty($markedQuestions) && in_array($question['id'], explode(',', $markedQuestions["questions"]))) {
           echo ("filled-bookmark-ribbon");
         } else {
           echo ("bookmark-ribbon--v1");
@@ -79,15 +77,12 @@
     <!-- IMGs -->
     <div class="imgsQuestion mb-1 mt-4 ms-3 d-flex overflow-auto">
       <?php
-      if (!empty($imagesList)) {
-        for ($i = 0; $i < count($imagesList); $i++) {
-          //  echo($imagesList[$i]['imgs']$question['id']);
-          if ($imagesList[$i]['id_question_answer'] === $question['id']) {
-            $srcImgs = explode(',', $imagesList[$i]['imgs']);
-            foreach ($srcImgs as $srcImg) {
-              echo ('<a class="imgsList thumbnail fancybox" rel="'.$question['id'].'" href="images/'.$srcImg.'" data-fancybox="images" data-caption="Image 1" ><img class="imgsList img-responsive" src="' . 'images/' . $srcImg . '"></a>');           
-            }
-
+      for ($i = 0; $i < count($imagesList); $i++) {
+        //  echo($imagesList[$i]['imgs']$question['id']);
+        if ($imagesList[$i]['id_question_answer'] === $question['id']) {
+          $srcImgs = explode(',', $imagesList[$i]['imgs']);
+          foreach ($srcImgs as $srcImg) {
+            echo ('<a class="imgsList"><img class="imgsList" src="' . 'images/' . $srcImg . '"></a>');
           }
 
         }
@@ -113,7 +108,7 @@
     <!-- Vote -->
     <div class="featureQuestion mt-4" id="updownvote<?php echo ($question['id']); ?>">
       <button class="btn btn-outline-purple-nohover py-1 d-inline btnsUpVote <?php
-      //Kiểm tra nếu người dùng đã vote thì hiện trạng thái
+      //Kiểm tra nếu người dùng đã vote thì hiện trạng thái  
       if (in_array($question["id"], explode(',', $upVotedQuestions))) {
         echo ("active");
       }
@@ -146,6 +141,17 @@
   </div>
 
 <?php } ?>
+
+<?php 
+  if(empty($questions)) { 
+    echo('<div id="notify-center" class="d-flex me-2">
+    <span class="material-symbols-outlined">
+sentiment_dissatisfied
+</span>No questions available</div>'); 
+  }
+
+?> 
+
 <!-- ấn để hiển thị trả lời câu hỏi -->
 <div class="modal fade" id="showAnswer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="idDialogAnswer">
@@ -161,7 +167,7 @@
             <!-- phần avartar -->
             <div class="col-1">
               <div id="idAvatarQuestion" class="avatarQuestion">
-                <img src="images/default.png" alt="err">
+
               </div>
 
             </div>
@@ -182,7 +188,7 @@
           <div class="featureQuestion mt-4 ms-2" id="updownvote<?php echo ($question['id']); ?>">
             <button class="btn btn-outline-purple-nohover py-1 d-inline btnsUpVote">
               <p class="m-0"><i class="fa fa-angle-up text-purple" aria-hidden="true"></i>
-                Upvote <span id="upvoteValueModal">0</span></p>
+                Upvote <span id="upvoteValue">0</span></p>
             </button>
             <button class="btn btn-outline-purple-nohover py-1 btnsDownVote">
               <p class="m-0"><i class="fa fa-angle-down text-purple " aria-hidden="true"></i>
@@ -197,9 +203,9 @@
 
       </div>
 
-      <div class="modal-footer row justify-content-start" contenteditable="true">
+      <div class="modal-footer row justify-content-start">
         <div class="col-10 ms-1">
-          <textarea name="inputAnswer"  id="inputAnswer" rows="2" class="p-0"></textarea>
+          <textarea name="inputAnswer" id="inputAnswer" rows="2" class="p-0"></textarea>
         </div>
         <div class="col-1">
           <button type="button" class="btn btn-bg-blue" id="idBtnAnswer">Answer</button>
