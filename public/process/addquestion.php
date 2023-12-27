@@ -31,7 +31,7 @@ if (!empty($_POST["content"])) {
 
 if (!empty($author) && !empty($content)) {
     $temp = $questionModule->insertQuestion($content, $type, $created_at, $created_at, $author);
-    var_dump($_FILES); 
+    // var_dump($_FILES); 
     if ($temp != false && !empty($strHashtag)) {
         var_dump(explode(',', $strHashtag));
         $tagModule->insertHashtagQuestion($temp, explode(',', $strHashtag));

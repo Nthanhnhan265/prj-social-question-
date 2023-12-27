@@ -1,6 +1,12 @@
 <?php 
 class Question extends Database { 
 
+    //Phương thức lấy câu hỏi trong trang  
+    public function getQuestionsInPage($startPage, $numOfPage) { 
+        $sql=parent::$connection->prepare("select * from questions limit $startPage,$numOfPage");
+        return parent::select($sql); 
+    }
+
     //Phương thức hiển thị tất cả câu hỏi 
     public function getAllQuestions() { 
         $sql=parent::$connection->prepare("select * from questions order by id desc"); 
@@ -10,7 +16,7 @@ class Question extends Database {
     
     //Phương thức trả về câu hỏi có chứa hashtag 
     public function getAllQuestionByTag($tagName){ 
-        $sql =parent::$connection->prepare("SELECT questions.*,count(*) as valuesOfQuestion FROM `hashtag_question`,questions,hashtags where hashtag_question.id_hashtag=hashtags.id_hashtag and questions.id=hashtag_question.id_question and hashtags.name=?");
+        $sql =parent::$connection->prepare("SELECT questions.* FROM `hashtag_question`,questions,hashtags where hashtag_question.id_hashtag=hashtags.id_hashtag and questions.id=hashtag_question.id_question and hashtags.name=?");
         $sql->bind_param('s',$tagName);
         return parent::select($sql);  
     }
@@ -27,6 +33,22 @@ class Question extends Database {
             return false; 
         }
     }
+    //phương thức trả về câu hỏi có lượt vote nhiều nhất 
+    public function getTopQuestions() { 
+        $sql=parent::$connection->prepare("select * from questions ORDER BY (questions.upvote) DESC LIMIT 3;
+        "); 
+        return parent::select($sql); 
+    }
+
+    //Phương thức lấy câu hỏi gần đây 
+    public function getQuestionsRecentView($arrIDs) { 
+        $questionMark='('.str_repeat('?,',count($arrIDs)-1).'?)'; 
+        $types=str_repeat('i',count($arrIDs)); 
+        $sql=parent::$connection->prepare("SELECT * FROM questions where id in $questionMark");
+        $sql->bind_param($types,...$arrIDs);
+        return parent::select($sql);
+    }
+
     //Phương thức xóa câu hỏi 
     public function deleteQuesiton($id) { 
         try {
@@ -62,6 +84,10 @@ class Question extends Database {
         }
         return false; 
     }
+
+    
+
+
     //Giảm số lượng upvote của câu hỏi 
     public function minusVote($id,$type) { 
         try { 

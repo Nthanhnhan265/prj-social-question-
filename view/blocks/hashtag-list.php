@@ -18,14 +18,15 @@ if(!empty($questions)) {
   questions</span>
 
 
-<?php foreach ($questions as $question) { ?>
+<?php
+foreach ($questions as $question) { ?>
 
   <div class="questionBlock mb-2" id="idQuestion<?php echo ($question["id"]); ?>">
     <div class="row infoQuestion mb-3">
       <!-- phần avartar -->
       <div class="col-1">
         <div class="avatarQuestion">
-          <img src="/images/N-0.webp" alt="" srcset="">
+          <img src="images/default.png" alt="" srcset="">
 
         </div>
 
@@ -51,14 +52,14 @@ if(!empty($questions)) {
       <div class="col-1">
         <img width="23" height="23" src="https://img.icons8.com/ios/50/forward-arrow.png" alt="forward-arrow" />
         <img width="24" height="24" src="https://img.icons8.com/windows/50/<?php
-        if (in_array($question['id'], explode(',', $markedQuestions["questions"]))) {
+        if ( !empty($markedQuestions) && in_array($question['id'], explode(',', $markedQuestions["questions"]))) {
           echo ("filled-bookmark-ribbon");
         } else {
           echo ("bookmark-ribbon--v1");
         }
         ?>.png" alt="error" data-id-question="<?php echo ($question["id"]); ?>" class="btnsBookmark"
           bookmarked-state="filled-bookmark-ribbon" unbookmarked-state="bookmark-ribbon--v1" is-clicked="<?php
-          if (in_array($question['id'], explode(',', $markedQuestions["questions"]))) {
+          if (!empty($markedQuestions) && in_array($question['id'], explode(',', $markedQuestions["questions"]))) {
             echo ("true");
           } else {
             echo ("false");
@@ -74,7 +75,7 @@ if(!empty($questions)) {
       </b>
     </div>
     <!-- IMGs -->
-    <div class="imgsQuestion mb-1 mt-4 ms-3">
+    <div class="imgsQuestion mb-1 mt-4 ms-3 d-flex overflow-auto">
       <?php
       for ($i = 0; $i < count($imagesList); $i++) {
         //  echo($imagesList[$i]['imgs']$question['id']);

@@ -53,8 +53,27 @@
         ?>
       </b>
     </div>
-    <div class="imgsQuestion mb-1">
-      <!-- IMGs -->
+    <div class="imgsQuestion mb-1 mt-4 ms-3 d-flex overflow-auto">
+      <?php
+      if (!empty($imagesList)) {
+        for ($i = 0; $i < count($imagesList); $i++) {
+          //  echo($imagesList[$i]['imgs']$question['id']);
+          if ($imagesList[$i]['id_question_answer'] === $question['id']) {
+            $srcImgs = explode(',', $imagesList[$i]['imgs']);
+            foreach ($srcImgs as $srcImg) {
+              echo ('<a class="imgsList thumbnail fancybox" rel="'.$question['id'].'" href="images/'.$srcImg.'" data-fancybox="images" data-caption="Image 1" ><img class="imgsList img-responsive" src="' . 'images/' . $srcImg . '"></a>');           
+            }
+
+          }
+
+        }
+
+      }
+      ?>
+
+
+
+
     </div>
     <!-- Hashtags -->
     <?php foreach ($tagsOfQuestions as $arr) {

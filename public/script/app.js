@@ -3,6 +3,7 @@ const answersForQuestion = document.querySelector("#answersForQuestion");
 const idAuthorQuestion = document.querySelector('#idAuthorQuestion');
 const idDateQuestion = document.querySelector('#idDateQuestion');
 const idHeadingQuestion = document.querySelector('#idHeadingQuestion');
+const idUpvoteValue=document.querySelector('#upvoteValueModal');
 const btnAnswer = document.querySelector('#idBtnAnswer');
 let selectedQuestion = "";
 let btnsUpvoteAnswer;
@@ -16,11 +17,9 @@ const minute=1;
 const second=2;
 const date=0; 
 const hours=1; 
-
 function load() { 
   location.replace("https://www.w3schools.com")
 }
-
 function loadAnswerToModal(data) {
   data.forEach(element => {
     let strDateTime=element['created_at'].split(' ');
@@ -32,6 +31,8 @@ function loadAnswerToModal(data) {
         <!-- phần avartar -->
         <div class="col-1">
           <div class="avatarQuestion">
+          <img src="images/default.png" alt="err">
+
           </div>
           <!-- USER's Info -->
         </div>
@@ -157,7 +158,6 @@ function loadAnswerToModal(data) {
 
 
 }
-
 //Hiển thị câu hỏi khi ấn vào và load câu trả lời 
 btnsShowAnswer.forEach(element => {
   element.addEventListener('click', () => {
@@ -169,6 +169,7 @@ btnsShowAnswer.forEach(element => {
     idAuthorQuestion.textContent = questionInfo.querySelector('.authorQuestion').textContent;
     idDateQuestion.textContent = questionInfo.querySelector('.dateQuestion').textContent;
     idHeadingQuestion.textContent = questionInfo.querySelector('.contentQuestion').textContent;
+    idUpvoteValue.textContent=questionInfo.querySelector('#upvoteValue').textContent; 
     answersForQuestion.innerHTML = "";
     //lấy câu trả lời của câu hỏi từ server 
     async function GetAnswer() {

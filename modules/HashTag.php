@@ -1,6 +1,20 @@
 <?php 
 class HashTag extends Database { 
 
+
+    
+    // PHương thức lấy tất cả tags trong trang
+    public function getTagsInPage($startPage,$perPage) { 
+        $sql=parent::$connection->prepare("SELECT * FROM hashtags limit $startPage,$perPage");
+        return parent::select($sql); 
+    }
+
+    // PHương thức lấy tất cả tags 
+    public function getAllTags() { 
+        $sql=parent::$connection->prepare("SELECT * FROM hashtags");
+        return parent::select($sql); 
+    }
+
     //Phương thức lấy tất cả Tags của tất cả câu hỏi 
     public function getAllTagsAndQuestions() { 
         $sql=parent::$connection->prepare("SELECT GROUP_CONCAT(hashtags.name) as tags,hashtag_question.id_question
@@ -13,7 +27,7 @@ class HashTag extends Database {
 
     //Phương thức lấy tất cả tags được gán nhiều nhất trong 24h qua 
     public function getAllTagsIn24Hours () { 
-        $sql=parent::$connection->prepare("SELECT hashtags.*,hashtag_question.created_at, count(hashtag_question.id_hashtag) as count FROM `hashtag_question`,`hashtags` WHERE hashtag_question.created_at >date_sub(now(),INTERVAL 24 HOUR) and hashtag_question.id_hashtag=hashtags.id_hashtag GROUP BY hashtag_question.id_hashtag ORDER BY count desc;"); 
+        $sql=parent::$connection->prepare("SELECT hashtags.*,hashtag_question.created_at, count(hashtag_question.id_hashtag) as count FROM `hashtag_question`,`hashtags` WHERE hashtag_question.created_at >date_sub(now(),INTERVAL 30 Day) and hashtag_question.id_hashtag=hashtags.id_hashtag GROUP BY hashtag_question.id_hashtag ORDER BY count desc;"); 
         return parent::select($sql); 
     }
 

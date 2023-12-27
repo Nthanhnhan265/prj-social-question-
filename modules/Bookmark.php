@@ -12,7 +12,7 @@ class Bookmark extends Database {
      public function getAllMarkedQuestions($username ) { 
         $sql=parent::$connection->prepare("SELECT questions.*,bookmarks.marked_by FROM `bookmarks` INNER JOIN questions
         on bookmarks.question_id=questions.id
-        WHERE marked_by=?"); 
+        WHERE marked_by=? ORDER BY created_at desc"); 
         $sql->bind_param("s",$username); 
         return parent::select($sql); 
      }

@@ -1,5 +1,15 @@
 <?php 
 class Answer extends Database { 
+    //Lấy câu trả lời trong 1 trang 
+    public function getAnswerInPage($startPage,$perPage) { 
+        $sql=parent::$connection->prepare("select * from answers limit $startPage,$perPage");
+        return parent::select($sql);   
+    }
+
+    public function getAllAnswers() { 
+        $sql=parent::$connection->prepare("select * from answers");
+        return parent::select($sql);   
+    }
 
     //Phuong thuc tra ve cau hoi qua id_answer 
     public function getAnswerByID($id_answer) { 
@@ -7,7 +17,7 @@ class Answer extends Database {
         $sql->bind_param('i',$id_answer);
         return parent::select($sql);   
     }
-    //Phương thức hiển thị tất cả trả lời của một câu hỏi
+    //Phương thức hiển thị tất cả trả lời của một câu hỏi khi người dùng đã đăng nhập
     public function getAllAnswersByQuestion($username, $id) { 
         $sql=parent::$connection->prepare("
         SELECT questions.id as id_question, answers.*,users.firstname, users.lastname,user_voted_answer.type
@@ -26,6 +36,27 @@ class Answer extends Database {
        $sql->bind_param("si",$username,$id); 
         return parent::select($sql); 
     }
+    //Phương thức hiển thị tất cả trả lời của một câu hỏi khi người dùng chưa đăng nhập
+    public function getAllAnswersByQuestionWithoutSignIn($id) { 
+        $sql=parent::$connection->prepare("
+        SELECT questions.id as id_question, answers.*,users.firstname, users.lastname
+        from questions
+        INNER JOIN answers 
+        ON questions.id=answers.id_question 
+        INNER JOIN users 
+        ON answers.author=users.username
+        LEFT JOIN (
+            select * from vote_answer 
+        ) as user_voted_answer
+        ON user_voted_answer.id_answer=answers.id_answer 
+        WHERE answers.id_question=?;        
+        "); 
+
+       $sql->bind_param("i",$id); 
+        return parent::select($sql); 
+    }
+
+
     //Phương thức thêm câu trả lời $content,$created_at,$edited_at,$status,$id_quesion
     public function insertAnswer($content,$author,$created_at,$edited_at,$status,$id_quesion) { 
         try {
