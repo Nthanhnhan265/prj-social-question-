@@ -74,3 +74,5 @@
     ]; 
 
     $template->View("home",$data); 
+
+    ?>

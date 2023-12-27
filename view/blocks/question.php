@@ -21,7 +21,6 @@
 
 </div>
 
-
 <?php foreach ($questions as $question) { ?>
 
   <div class="questionBlock mb-2" id="idQuestion<?php echo ($question["id"]); ?>">
