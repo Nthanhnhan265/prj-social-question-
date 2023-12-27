@@ -8,8 +8,7 @@
     <?php
     if (!empty($title)) {
       echo ($title);
-    }
-
+    }?>
 
   </title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -114,7 +113,13 @@
           if (isset($_SESSION["username"])) {
           ?>
             <div id="nav-login">
-              <img src="../public/avatar/<?php echo $_SESSION["avt"]; ?>" style="width: 20px; height: 20px; border-radius: 50%" alt="">
+              <img src="../public/avatar/<?php
+              if(!empty($_SESSION['avt'])) { 
+                echo $_SESSION["avt"]; 
+              }else { 
+                echo("default.png"); 
+              }
+              ?>" style="width: 40px; height: auto; border-radius: 50%" alt="">
               <button type="button" class="btn btn-outline-purple" data-bs-toggle="modal" data-bs-target="">
                 <?php
                 echo $_SESSION["username"];
