@@ -31,11 +31,11 @@
         <div class="col-sm-2">
           <!-- Logo  -->
           <div id="nav-logo">
-            <a href="index.php" class="text-decoration-none">Askany</a>
+            <a href="admin.php" class="text-decoration-none">Askany</a>
           </div>
         </div>
         <div class="col-sm-9">
-          <div class="container-fluid nav-edit d-flex">
+          <div class="container-fluid nav-edit-admin d-flex">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
               data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
               aria-label="Toggle navigation">
@@ -43,77 +43,77 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <!-- <li class="nav-item icon-active">
+                  <a class="nav-link" aria-current="page" href="../public/admin.php"><i class="fa fa-home"></i>
+                  </a>
+                </li> -->
+                <!-- User -->
                 <li class="nav-item icon-active">
-                  <a class="nav-link" aria-current="page" href="../public/index.php"><i class="fa fa-home"></i></a>
+                  <a class="nav-link" aria-current="page" href="admin.php">
+                    <span class="material-symbols-outlined fa">
+                      manage_accounts
+                    </span>
                   </a>
                 </li>
-                <!-- Di Chuyển Đến Trang xem thông báo -->
+                <!--Question-->
                 <li class="nav-item">
-                  <a class="nav-link" href="<?php
-                  //kiểm tra nếu người dùng chưa đăng nhập thì không cho di chuyển
-                  if (!empty($_SESSION['username'])) {
-                    echo ('../public/notification.php');
-
-                  }
-                  ?>" <?php
-                  if (empty($_SESSION['username'])) {
-                    echo ('data-bs-toggle="modal" data-bs-target="#sign-in"');
-
-                  }
-                  ?>><i class="fa fa-bell-o" aria-hidden="true"></i>
-                    </i>
+                  <a class="nav-link" aria-current="page" href="question.php">
+                    <span class="fa material-symbols-outlined">
+                      quiz
+                    </span>
                   </a>
                 </li>
+                <!--Answer-->
                 <li class="nav-item">
-                  <a class="nav-link" href="<?php
-                  //kiểm tra nếu người dùng chưa đăng nhập thì không cho di chuyển
-                  if (!empty($_SESSION['username'])) {
-                    echo ('../public/bookmark.php');
-
-                  }
-                  ?>" <?php
-                  if (empty($_SESSION['username'])) {
-                    echo ('data-bs-toggle="modal" data-bs-target="#sign-in"');
-
-                  }
-                  ?>>
-
-                    <i class="fa fa-bookmark-o" aria-hidden="true"></i>
+                  <a class="nav-link" aria-current="page" href="answer.php">
+                    <span class="fa material-symbols-outlined">
+                      mode_comment
+                    </span>
                   </a>
                 </li>
+                <!--tag-->
                 <li class="nav-item">
-                  <a class="nav-link" href="#"><i class="fa fa-toggle-off" aria-hidden="true"></i>
-                    </i>
+                  <a class="nav-link" aria-current="page" href="hashtag.php">
+                    <span class="fa material-symbols-outlined">
+                      sell
+                    </span>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"><i class="fa fa-plus-square-o" aria-hidden="true" data-bs-toggle="modal"
-                      data-bs-target="
-                      <?php //kiểm tra nếu người dùng chưa đăng nhập thì mở modal đăng nhập 
-                      if (!empty($_SESSION['username'])) {
-                        echo ('#addQuestion');
-                      } else {
-                        echo ('#sign-in');
-                      } ?>"></i>
-                  </a>
-                </li>
+
               </ul>
-              <form class="d-flex" role="search">
+              <!-- <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
+                <button class="btn btn-outline-info" type="submit">Search</button>
+              </form> -->
             </div>
           </div>
 
         </div>
         <div class="col-sm-1">
           <!-- Sign in, sign up -->
-          <div id="nav-login">
-            <button type="button" class="btn btn-outline-purple" data-bs-toggle="modal" data-bs-target="#sign-in">Sign
+          <div id="nav-login-admin" class='text-start'>
+            <?php if (!empty($_SESSION['username'])) {
+              $userAdmin = (new User())->getUserByUsername($_SESSION['username']);
+              if (!empty($userAdmin['avatar'])) {
+                echo ('<img src="../public/images/' . $userAdmin['avatar'] . '" class="ms-3 avatar" alt="">');
+              }
+              else { 
+                echo ('<img src="../public/images/default.png" class="ms-3 avatar" alt="">');
+              }
+              echo('<p class="mb-0">Hi! '.ucwords ($userAdmin['lastname'] .' ' .$userAdmin['firstname']).'</p>');
+              echo('<a href="../public/index.php"><span class="ms-2 fa material-symbols-outlined">
+              logout
+              </span></a>'); 
+
+
+
+            } ?>
+
+            <!-- <button type="button" class="btn btn-outline-purple" data-bs-toggle="modal" data-bs-target="#sign-in">Sign
               in</button>
 
             <button type="button" class="btn btn-outline-blue" data-bs-toggle="modal" data-bs-target="#sign-up">Sign
-              up</button>
+              up</button> -->
           </div>
 
         </div>
@@ -265,9 +265,9 @@
           echo ($slot);
         }
         ?>
-      </div>  
+      </div>
       <!-- Phần nội dung -->
-      <div class="col-9-sm midContent overflow-auto" id="homePageContent">
+      <div class="col-10-sm midContent-admin overflow-auto" id="homePageContent">
         <?php
         if (!empty($slot2)) {
           echo ($slot2);
@@ -277,16 +277,16 @@
 
       </div>
       <!-- Phần footer -->
-      <div class="col-1-sm rightBar text-center">
+      <!-- <div class="col-1-sm rightBar text-center">
         This is footer
-      </div>
+      </div> -->
     </div>
   </div>
 
 
 
   <script src="script/app.js">
-  </script> 
+  </script>
   <script src="script/state.js"></script>
   <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1/dist/es-module-shims.min.js"
     crossorigin="anonymous"></script>
@@ -313,8 +313,8 @@
       $(".fancybox").fancybox({
         openEffect: "none",
         closeEffect: "none",
-        'nextEffect'    :   'fade',
-       
+        'nextEffect': 'fade',
+
       });
     });
   </script>
