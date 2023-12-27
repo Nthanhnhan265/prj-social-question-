@@ -39,6 +39,8 @@ if (empty($username) || empty($lastname) || empty($firstname) || empty($password
     if ($password == $retype) {
         if (in_array($img_correct_ext, $allow)) {
             if ($size < 500000) {
+                    // public function SignUp($username, $firstName, $lastName, $password, $joinAt, $avatar)
+                    //$userModule->SignUp('6','3','4','5',$joinAt,''); 
                 if ($userModule->SignUp($username, $firstname, $lastname, $password, $joinAt, $img)) {
                     move_uploaded_file($tmp_name, $path);
                     echo '<script>alert("Đăng ký thành công!"); window.location.href="./index.php";</script>';

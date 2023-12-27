@@ -15,16 +15,19 @@
     <div class="personal-information border-purple p-3">
         <div class="container-fluid generalInfo">
             <div class="row">
-                <div class="col-sm-1">IMG</div>
+                <img src="" alt="">
+                <div class="col-sm-1"><img src="../public/avatar/<?php  echo ($user['avatar']); ?> " alt=""></div>
                 <div class="col-sm-9">
-                    <h4>Nguyen Thanh Nhan</h4>
-                    <p>Date</p>
+                    <h4>
+                    <?php
+                        echo ($user['lastname']." ".$user['firstname']);
+                    ?>
+                    </h4>
+                    <p><?php echo($user['joined_at']);?></p>
                 </div>
                 <div class="col-sm-2 text-center">
-                    <i class="fa fa-thumbs-o-up d-block text-none-color" aria-hidden="true"></i>
-                    <i class="fa fa-share text-none-color d-block mt-1" aria-hidden="true"></i>
-                    <i class="fa fa-ellipsis-v mt-1 text-none-color" aria-hidden="true"></i>
-                    
+                <button type="button" class="btn btn-outline-blue" data-bs-toggle="modal" data-bs-target="">
+                <a href="user.php" style="text-decoration: none;">Chinh sua</a>
                 </div>
             </div>
         </div>
