@@ -6,7 +6,11 @@ const idHeadingQuestion = document.querySelector('#idHeadingQuestion');
 const idUpvoteValue=document.querySelector('#upvoteValueModal');
 const idUpvoteQuestion=document.querySelector('#idUpvoteQuestion');
 const idDownvoteQuestion=document.querySelector('#idDownvoteQuestion');  
+const idImgQuestion=document.querySelector('#idAvatarQuestion');
 const btnAnswer = document.querySelector('#idBtnAnswer');
+const idImgsOfQuestion=document.querySelector('#imgQuestion');
+const idHashtags=document.querySelector("#idHashtags");
+const note=document.querySelector('.note-editable');
 let selectedQuestion = "";
 let btnsUpvoteAnswer;
 let btnDownvoteAnswer;
@@ -33,7 +37,7 @@ function loadAnswerToModal(data) {
         <!-- phần avartar -->
         <div class="col-1">
           <div class="avatarQuestion">
-          <img src="images/default.png" alt="err">
+          <img src="avatar/${(element['avatar']!='')?element['avatar']:'default.png'}" alt="err">
 
           </div>
           <!-- USER's Info -->
@@ -172,6 +176,12 @@ btnsShowAnswer.forEach(element => {
     idDateQuestion.textContent = questionInfo.querySelector('.dateQuestion').textContent;
     idHeadingQuestion.textContent = questionInfo.querySelector('.contentQuestion').textContent;
     idUpvoteValue.textContent=questionInfo.querySelector('.upvoteValue').textContent; 
+    idImgQuestion.setAttribute('src',questionInfo.querySelector('.avt').getAttribute('src'));
+    const listImg=questionInfo.querySelector('.imgsQuestion');
+    const hashtags=questionInfo.querySelector('.hashtags');
+
+    idImgsOfQuestion.innerHTML=listImg.innerHTML;
+    idHashtags.innerHTML=hashtags.innerHTML; 
     // alert(questionInfo.querySelector('.btnsUpVote'));
     //Hiển thị trạng thái lên modal 
     if(questionInfo.querySelector('.btnsUpVote').classList.contains('active')) { 
@@ -215,8 +225,9 @@ btnAnswer.addEventListener('click', () => {
       "id_question": selectedQuestion,
       "content": inputAnswer.value
     };
+    // no te.innerHTML="<p></p>";
     answersForQuestion.innerHTML = "";
-    inputAnswer.value = "";
+    inputAnswer.textContent = "";
     async function PostAnswer() {
       const respone = await fetch('../api/send-answer.php', {
         headers: { "Content-Type": "Application/json" },

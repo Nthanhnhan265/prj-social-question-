@@ -55,5 +55,22 @@ class Images extends Database {
 
 
     } 
+    // Xóa 1 tấm hình khi có mã hình ảnh, được dùng khi user click nút xóa cho 1 hình ảnh
+    public function deleteImagesByID_question($id) { 
+
+        try {
+            //code...
+            $sql=parent::$connection->prepare('delete from images where id_question_answer=? and type="question"');
+            $sql->bind_param('i',$id); 
+            $sql->execute();
+            return true;  
+        } catch (\Throwable $th) {
+            echo("co loi xay ra trong Images/insertImages".$th); 
+            return false; 
+        }
+
+
+
+    } 
 
 }

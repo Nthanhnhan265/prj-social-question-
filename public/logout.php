@@ -4,6 +4,9 @@ require("../config/config.php");
 if (isset($_SESSION['username'])) {
     unset($_SESSION['username']);
     unset($_SESSION["avt"]);
+    setcookie('recentIDs','',time()-0,'/');
+    setcookie('username','',time()-0,'/'); 
+    setcookie('password','',time()-0,'/'); 
     // echo '<script>alert("Đăng xuất thành công!"); window.location.href="./index.php";</script>';
     header("location: index.php");
 } else {

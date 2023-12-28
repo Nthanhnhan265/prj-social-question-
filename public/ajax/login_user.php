@@ -12,11 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = $userModule->SignIn($username);
     if (!empty($user)) {
         if (password_verify($password, $user["password"])) {
-            setcookie("username", $username, time() + 86400 * 30);
-            setcookie("password", $user["password"], time() + 86400 * 30);
+            setcookie("username", $username, time() + 86400 * 30,"/");
+            setcookie("password", $user["password"], time() + 86400 * 30,"/");
             $_SESSION["username"] = $username;
             $_SESSION["avt"] = $userModule->getAvatarByUsername($username);
             echo 'Valid';
+            // header('http://localhost/prj-social-question-/admin/'); 
         } else {
             echo 'Invalid';
         }

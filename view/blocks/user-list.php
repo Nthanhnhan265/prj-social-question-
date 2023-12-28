@@ -3,13 +3,13 @@
 <table class="mt-3 mb-2 idListUsers">
     <tr>
         <th class="px-3 bg-info text-white text-center">Action</th>
+        <th class="px-1 bg-info text-white text-center">Avatar</th>
         <th class="px-1 bg-info text-white text-center">Username</th>
         <th class="px-1 bg-info text-white text-center">Last name</th>
         <th class="px-1 bg-info text-white text-center">First name</th>
         <th class="px-1 bg-info text-white text-center">Description</th>
         <th class="px-1 bg-info text-white text-center">Created at</th>
         <th class="px-1 bg-info text-white text-center">Password</th>
-        <th class="px-1 bg-info text-white text-center">Avatar</th>
     </tr>
     
     <?php
@@ -26,6 +26,9 @@
 
                 </a>
          -->
+            </td>
+            <td class='px-1 text-center'>
+                <img src="../public/avatar/<?php echo ($user['avatar']); ?>" class='avatar' alt="">
             </td>
             <td class='px-1 text-center'>
                 <?php echo ($user['username']); ?>
@@ -47,9 +50,6 @@
                 <?php
                 echo (substr($user['password'], 0, 40));
                 ?>...
-            </td>
-            <td class='px-1 text-center'>
-                <?php echo ($user['avatar']); ?>
             </td>
 
         </tr>

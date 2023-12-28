@@ -6,14 +6,17 @@
     <img src="path/to/image1.jpg" alt="Image 1" />
   </a> -->
       <div class="col-sm-1 avatarQuestion">
-        <img src="<?php if(!empty($_SESSION['username'])){ 
+        <img src="<?php if (!empty($_SESSION['username'])) {
           $user = $userModule->getUserByUsername($_SESSION['username']);
-          if(!empty($user['avatar'])) {
-            echo('avatar/'.$user['avatar']); 
-          } else { 
-            echo('images/default.png'); 
+          if (!empty($user['avatar'])) {
+            echo ('avatar/' . $user['avatar']);
+          } else {
 
+            echo ('images/default.png');
           }
+
+        } else {
+          echo ('images/default.png');
 
         } ?>" alt="" srcset="">
       </div>
@@ -31,12 +34,12 @@
 
 </div>
 
-<?php 
+<?php
 
-if(empty($questions)) { 
-  echo('<h6 style="opacity:50%" class="d-flex align-items-center ps-5 pt-2"><span class="pe-2 material-symbols-outlined">
+if (empty($questions)) {
+  echo ('<h6 style="opacity:50%" class="d-flex align-items-center ps-5 pt-2"><span class="pe-2 material-symbols-outlined">
   sentiment_very_dissatisfied
-  </span>No questions available</h6>'); 
+  </span>No questions available</h6>');
 }
 foreach ($questions as $question) { ?>
 
@@ -45,21 +48,17 @@ foreach ($questions as $question) { ?>
       <!-- phần avartar -->
       <div class="col-1 ps-0">
         <div class="avatarQuestion">
-        <img src="
-        <?php if(!empty($_SESSION['username'])){ 
-          $user = $userModule->getUserByUsername($question["author"]);
-          if(!empty($user['avatar'])) {
-            echo('avatar/'.$user['avatar']); 
-          } else { 
-            echo('images/default.png'); 
+          <a href="personal-info.php?user=<?php echo($question['author']) ?>&page=answered"  class="avatar"><img class='avt' src="<?php 
+          
+              $user = $userModule->getUserByUsername($question["author"]);
+              if (!empty($user['avatar'])) {
+                echo ('avatar/' . $user['avatar']);
+              } else {
+                echo ('images/default.png');
 
-          }
-
-        }else { 
-          echo('images/default.png'); 
-
-        }
-         ?>" alt="" srcset="">
+              }
+        ?>" alt="" srcset="">
+          </a>
         </div>
 
       </div>
@@ -82,7 +81,7 @@ foreach ($questions as $question) { ?>
       </div>
       <!-- phần nút like, share -->
       <div class="col-1">
-        <img width="23" height="23" src="https://img.icons8.com/ios/50/forward-arrow.png" alt="forward-arrow" />
+        <!-- <img width="23" height="23" src="https://img.icons8.com/ios/50/forward-arrow.png" alt="forward-arrow" /> -->
         <img width="24" height="24" src="https://img.icons8.com/windows/50/<?php
         if (!empty($markedQuestions) && in_array($question['id'], explode(',', $markedQuestions["questions"]))) {
           echo ("filled-bookmark-ribbon");
@@ -115,7 +114,7 @@ foreach ($questions as $question) { ?>
           if ($imagesList[$i]['id_question_answer'] === $question['id']) {
             $srcImgs = explode(',', $imagesList[$i]['imgs']);
             foreach ($srcImgs as $srcImg) {
-              echo ('<a class="imgsList thumbnail fancybox" rel="'.$question['id'].'" href="images/'.$srcImg.'" data-fancybox="images" data-caption="Image 1" ><img class="imgsList img-responsive" src="' . 'images/' . $srcImg . '"></a>');           
+              echo ('<a class="imgsListContain thumbnail fancybox" rel="' . $question['id'] . '" href="images/' . $srcImg . '" data-fancybox="images" data-caption="Image 1" ><img class="imgsList img-responsive" src="' . 'images/' . $srcImg . '"></a>');
             }
 
           }
@@ -130,15 +129,18 @@ foreach ($questions as $question) { ?>
 
     </div>
     <!-- Hashtags -->
+    <div class="hashtags">
     <?php foreach ($tagsOfQuestions as $arr) {
-      if ($question["id"] == $arr["id_question"]) {
-        $arrTags = explode(',', $arr["tags"]);
+    if ($question["id"] == $arr["id_question"]) {
+      $arrTags = explode(',', $arr["tags"]);
         foreach ($arrTags as $tag) {
-          echo ('<a href="hashtag.php?tag=' . $tag . '" class="badge badge-danger me-1">' . $tag . '</a>');
+          $urlEncode=urlencode($tag); 
+          echo ('<a href="hashtag.php?tag=' . $urlEncode . '" class="badge badge-danger me-1">' . $tag . '</a>');
         }
 
       }
     } ?>
+    </div>
 
     <!-- Vote -->
     <div class="featureQuestion mt-4" id="updownvote<?php echo ($question['id']); ?>">
@@ -147,7 +149,12 @@ foreach ($questions as $question) { ?>
       if (in_array($question["id"], explode(',', $upVotedQuestions))) {
         echo ("active");
       }
-      ?>" data-id-question="<?php echo ($question["id"]); ?>">
+      ?>" data-id-question="<?php echo ($question["id"]); ?>" <?php
+      if (empty($_SESSION['username'])) {
+        echo ('data-bs-toggle="modal" data-bs-target="#sign-in"');
+
+      }
+      ?>>
         <p class="m-0"><i class="fa fa-angle-up text-purple" aria-hidden="true"></i>
           Upvote <span class="upvoteValue">
             <?php
@@ -163,7 +170,12 @@ foreach ($questions as $question) { ?>
       if (in_array($question["id"], explode(',', $downVotedQuestions))) {
         echo ("active");
       }
-      ?>" data-id-question="<?php echo ($question["id"]); ?>">
+      ?>" data-id-question="<?php echo ($question["id"]); ?>" <?php
+      if (empty($_SESSION['username'])) {
+        echo ('data-bs-toggle="modal" data-bs-target="#sign-in"');
+
+      }
+      ?>>
         <p class="m-0"><i class="fa fa-angle-down text-purple " aria-hidden="true"></i>
         </p>
 
@@ -190,8 +202,8 @@ foreach ($questions as $question) { ?>
           <div class="row infoQuestion mb-3">
             <!-- phần avartar -->
             <div class="col-1">
-              <div id="idAvatarQuestion" class="avatarQuestion">
-                <img src="images/default.png" alt="err">
+              <div  class="avatarQuestion">
+                <img src="images/default.png" alt="err" id='idAvatarQuestion'>
               </div>
 
             </div>
@@ -208,6 +220,13 @@ foreach ($questions as $question) { ?>
           <h5 id="idHeadingQuestion" class="contentQuestion px-1">
             text default
           </h5>
+          <div id="imgQuestion" class='imgsQuestion d-flex overflow-auto'>
+
+          </div>
+        
+          <div id="idHashtags" class='mt-1'>
+
+          </div>
           <!-- Vote -->
           <div class="featureQuestion mt-4 ms-2" id="updownvote<?php echo ($question['id']); ?>">
             <button class="btn btn-outline-purple-nohover py-1 d-inline btnsUpVote" id='idUpvoteQuestion'>
@@ -221,20 +240,22 @@ foreach ($questions as $question) { ?>
           </div>
         </div>
         <hr>
+        <textarea name="inputAnswer" id="inputAnswer" rows="2" class="p-0 summernote"></textarea>
         <div class="ms-3" id="answersForQuestion">
+          
+          </div>
+          
+        </div>
+        
+        <div class ="modal-footer row justify-content-end" contenteditable="true">
+        <div class="col-9">
 
         </div>
-
-      </div>
-
-      <div class="modal-footer row justify-content-start" contenteditable="true">
-        <div class="col-10 ms-1">
-          <textarea name="inputAnswer"  id="inputAnswer" rows="2" class="p-0"></textarea>
-        </div>
-        <div class="col-1">
+        <div class="col-2">
           <button type="button" class="btn btn-bg-blue" id="idBtnAnswer">Answer</button>
 
-        </div>
+        </div>  
+        
       </div>
     </div>
   </div>

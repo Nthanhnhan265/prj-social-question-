@@ -1,7 +1,7 @@
 <?php
 include("../config/config.php");
 if (!empty($_GET['tag'])) {
-    $tag = $_GET['tag'];
+    $tag =  $_GET['tag'];
     define("UPVOTE", 1);
     define("FIRST_POS", 0);
     define("DOWNVOTE", 0);

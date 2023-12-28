@@ -16,8 +16,11 @@
                 </p>
             </div>
             <div class="col-sm-2 text-center">
-                <button type="button" class="btn btn-outline-blue" data-bs-toggle="modal" data-bs-target="">
-                    <a href="user.php" style="text-decoration: none;">Chinh sua</a>
+                <!-- <button type="button" class="btn btn-outline-blue" data-bs-toggle="modal" data-bs-target=""> -->
+                <?php 
+                if(!empty($_SESSION['username']) && $user['username']==$_SESSION['username']) { 
+                    echo('<a href="user.php" style="text-decoration: none;">Chinh sua</a>');}
+                ?>    
             </div>
         </div>
     </div>
@@ -30,30 +33,23 @@
     <div class="feature mt-5">
         <div class="d-flex justify-content-around">
             <h6 class='list px-3 py-2 <?php
-            if (empty($_GET['page']) || $page == 'shared') {
-                echo ('active');
-            } ?>'><a class="text-decoration-none text-black " href="personal-info?page=shared">Share</a></h6>
-            <h6 class='list px-3 py-2 <?php
             if (!empty($_GET['page']) && $page == 'answered') {
                 echo ('active');
-            } ?> '><a class="text-decoration-none text-black " href="personal-info?page=answered">Answer</a></h6>
+            } ?> '><a class="text-decoration-none text-black " href="personal-info?user=<?php echo($user['username']); ?>&page=answered">Answer</a></h6>
             <h6 class='list px-3 py-2 <?php
             if (!empty($_GET['page']) && $page == 'asked') {
                 echo ('active');
-            } ?> '><a class="text-decoration-none text-black " href="personal-info?page=asked">Question</a></h6>
+            } ?> '><a class="text-decoration-none text-black " href="personal-info?user=<?php echo($user['username']); ?>&page=asked">Question</a></h6>
             <h6 class='list px-3 py-2 <?php
             if (!empty($_GET['page']) && $page == 'marked') {
                 echo ('active');
-            } ?> '><a class="text-decoration-none text-black " href="personal-info?page=marked">Bookmark</a></h6>
+            } ?> '><a class="text-decoration-none text-black " href="personal-info?user=<?php echo($user['username']); ?>&page=marked">Bookmark</a></h6>
         </div>
     </div>
 
 </div>
 <div class="content-feature overflow-auto">
     <?php
-    if (!empty($shares)) {
-
-    }
 
     if (!empty($answers) && $page == 'answered') {
         foreach ($answers as $answer) {
@@ -81,15 +77,21 @@
                           </div>
                     
                         </div>
+                        '.( !empty($_SESSION['username']) && $user['username']==$_SESSION['username']?'
                         <div class="col-2 d-flex justify-content-end"> 
-                        <span class="text-none-color material-symbols-outlined">
-                          edit
-                        </span>
-                        <span class="ps-1 material-symbols-outlined text-red">
-                           delete
-                        </span>
-                        </div>
+                        <button class="btn btns-edit" data-toggle="modal" data-target="#">
+                            <span class="text-none-color material-symbols-outlined btns-editAnswer">
+                            edit
+                            </span>
+                        </button>
 
+                        <button class="btn btns-deleteAnswer" data-id-answer="'.$answer['id_answer'].'" data-toggle="modal" data-target="#confirm-delete-answer">
+                            <span class="ps-1 material-symbols-outlined text-red ">
+                            delete
+                            </span>
+                        </button>
+                        </div>
+                        ':'').'
                         <!--  CONTENT -->
                         <div class="contentAnswer pt-1 ps-4">
                            ' . $answer['content'] . '
@@ -120,7 +122,17 @@
                     <!-- phần avartar -->
                     <div class="col-1 ps-0">
                         <div class="avatarQuestion">
-                            <img src="images/default.png" alt="" srcset="">
+                            <img src="<?php
+                            if(!empty($user['avatar'])) { 
+                                echo("avatar/".$user['avatar']);
+
+                            }else { 
+                                echo('avatar/default.png'); 
+                            }
+                            ?> 
+                            
+                            
+                            " alt="" srcset="">
 
                         </div>
 
@@ -142,14 +154,22 @@
                         </div>
 
                     </div>
-                    <!-- phần nút like, share -->
+                    <!-- phần nút xoa, chinh sua -->
                     <div class="col-1 d-flex">
-                        <span class="text-none-color material-symbols-outlined">
-                          edit
-                        </span>
-                        <span class="ps-1 material-symbols-outlined text-red">
-                           delete
-                        </span>
+                        <?php if(!empty($_SESSION['username'])&&$user['username'] == $_SESSION['username']){?>
+                            <button type="button" class="btn p-0 btns-edit" data-id-question="<?php echo($question['id']);  ?>" data-toggle="modal" data-target="#">
+                                <span class="text-none-color material-symbols-outlined">
+                                  edit
+                                </span>
+                            
+                        </button>
+                        <button type="button" class="btn p-0 btns-delete" data-id-question="<?php echo($question['id']);  ?>" data-toggle="modal" data-target="#confirm-delete">
+                            <span class="ps-1 material-symbols-outlined text-red">
+                               delete
+                            </span>
+
+                        </button>
+                        <?php }?>
                     </div>
                 </div>
                 <!-- <div class="headingQuestion"><h4>heading</h4></div> -->
@@ -241,7 +261,15 @@
                     <!-- phần avartar -->
                     <div class="col-1 ps-0">
                         <div class="avatarQuestion">
-                            <img src="images/default.png" alt="" srcset="">
+                            <img src="<?php
+                            $author=$userModule->getUserByUsername($question['author']); 
+                            if(!empty($author['avatar'])) { 
+                                echo("avatar/".$author['avatar']);
+
+                            }else { 
+                                echo('avatar/default.png'); 
+                            }
+                            ?> " alt="" srcset="">
 
                         </div>
 
@@ -382,7 +410,14 @@
                             <!-- phần avartar -->
                             <div class="col-1">
                                 <div id="idAvatarQuestion" class="avatarQuestion">
-                                    <img src="images/default.png" alt="err">
+                                    <img src="<?php
+                            if(!empty($user['avatar'])) { 
+                                echo("avatar/".$user['avatar']);
+
+                            }else { 
+                                echo('avatar/default.png'); 
+                            }
+                            ?> " alt="err">
                                 </div>
 
                             </div>
@@ -413,6 +448,7 @@
                         </div>
                     </div>
                     <hr>
+                    <textarea name="inputAnswer" id="inputAnswer" class='summernote' rows="2" class="p-0"></textarea>
                     <div class="ms-3" id="answersForQuestion">
 
                     </div>
@@ -421,7 +457,6 @@
 
                 <div class="modal-footer row justify-content-start" contenteditable="true">
                     <div class="col-10 ms-1">
-                        <textarea name="inputAnswer" id="inputAnswer" rows="2" class="p-0"></textarea>
                     </div>
                     <div class="col-1">
                         <button type="button" class="btn btn-bg-blue" id="idBtnAnswer">Answer</button>
@@ -431,5 +466,59 @@
             </div>
         </div>
     </div>
+    
+    <!-- Xác nhận xem người dùng có đồng ý xóa -->
+    <div class="modal" id="confirm-delete"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Delete</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete?</p>
+          </div>
+          <div class="modal-footer">
+            <form action="process/delete-question.php" method="post">
+                <input type="hidden" name='id_question' id="idHiddenQuestion">
+                <button type="submit" class="btn btn-warning">Delete</button>
+            </form>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Xác nhận xem người dùng có đồng ý xóa -->
+    <div class="modal" id="confirm-delete-answer"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Delete</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete?</p>
+          </div>
+          <div class="modal-footer">
+            <form action="process/delete-answer.php" method="post">
+                <input type="hidden" name='id_answer' id="idHiddenAnswer">
+                <button type="submit" class="btn btn-warning">Delete</button>
+            </form>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </div>
+
+<script>
+$('#confirm-delete').on('shown.bs.modal', function () {
+  $('#confirm-delete').trigger('focus')
+})
+
+</script>

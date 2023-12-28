@@ -69,9 +69,6 @@ textarea {
     color: var(--backgroundComponent);
 }
 
-i { 
-    font-size: 24px !important;
-}
 
 .nav-item { 
     margin-left:1 ;
@@ -97,6 +94,9 @@ i {
 }
 .bg-content-gray { 
     background-color:var(--backgroundBody) ;
+}
+.bg-content-red { 
+    background-color:var(--navbarRed) ;
 }
 .text-purple { 
     color: var(--purple) !important;; 
@@ -135,6 +135,16 @@ i {
     /* margin: 0 6px; */
     padding: 1px;  
     background-color: var(--backgroundComponent);
+    border-radius: var(--halfBorderRad);
+}
+#nav-logo-admin { 
+    font-size: 30px ;
+    font-family: serif; 
+    width: var(--leftWidh); 
+    text-align: center;
+    /* margin: 0 6px; */
+    padding: 1px;  
+    background-color: var(--navbarRed);
     border-radius: var(--halfBorderRad);
 }
 /* TODO: chỉnh nút sign in,up  */
@@ -366,7 +376,7 @@ i {
     box-shadow: var(--backgroundComponent) 10px;
 
 }
-.avatarQuestion > img{
+.avatarQuestion img{
     border-radius: 50%;
     height: 45px; 
     width: 45px; 
@@ -404,7 +414,7 @@ i {
     text-decoration: none;
 }
 #idDialogAnswer { 
-    max-width: 56%;
+    max-width: 70%;
     justify-content: center;
     align-items: flex-start;
     /* height: 100%; */
@@ -440,13 +450,15 @@ i {
     padding:2px 5px;
     border-radius: 3px;
 }
+
+
 .imgsQuestion::-webkit-scrollbar { 
     display:none;
 }
 .imgsList {
     /* margin-right: 25px; */
     height: 250px!important;
-    padding: 2px 5px; 
+    padding: 0px 5px; 
     /* border: 1px #000 solid;  */
 }
 #notify-center {
@@ -468,4 +480,27 @@ i {
     margin-right:15px;  
     border-radius: var(--halfBorderRad);
     background-color: var(--backgroundComponent);
+}
+.answer { 
+    padding: 20px 10px; 
+    box-shadow: 0 0 0 1px #1717170d;
+    margin-bottom: 10px;
+    border-radius: var(--halfBorderRad);
+}
+.note-editor .note-toolbar, .note-popover .popover-content {
+    background-color: var(--backgroundBody);
+     
+}
+.note-editor.note-airframe .note-editing-area .note-editable, .note-editor.note-frame .note-editing-area .note-editable {
+    background-color: var(--backgroundBody);
+    opacity: 85%;
+}
+i { 
+    font-size: 24px!important;
+}
+.btn-group i { 
+    font-size: unset!important ;
+}
+#confirm-delete { 
+    transition: all 5s;
 }

@@ -99,7 +99,8 @@ foreach ($questions as $question) { ?>
       if ($question["id"] == $arr["id_question"]) {
         $arrTags = explode(',', $arr["tags"]);
         foreach ($arrTags as $tag) {
-          echo ('<a href="hashtag.php?tag=' . $tag . '" class="badge badge-danger me-1">' . $tag . '</a>');
+          $urlEncode=urldecode($tag);
+          echo ('<a href="hashtag.php?tag=' . $urlEncode . '" class="badge badge-danger me-1">' . $tag . '</a>');
         }
 
       }
