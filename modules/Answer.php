@@ -108,7 +108,7 @@ class Answer extends Database {
     //Phương thức sửa câu trả lời 
     public function editAnswer($content,$edited_at,$status,$id_answer) { 
         try {
-            $sql=parent::$connection->prepare("UPDATE `answers` SET `content`=?,`edited_at`=?,`status`=? where `id_question`=?");
+            $sql=parent::$connection->prepare("UPDATE `answers` SET `content`=?,`edited_at`=?,`status`=? where `id_answer`=?");
             $sql->bind_param("sssi",$content,$edited_at,$status,$id_answer); 
             $sql->execute(); 
         } catch (Throwable $th) {

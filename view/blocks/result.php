@@ -1,36 +1,92 @@
-<!-- ấn để mở câu nơi chọn câu hỏi -->
-<div class="hashtagInfo" >
-
-  <a href='hashtag.php?tag=<?php echo $tag ?>'  class="badge badge-title d-inline-flex py-1">
-    <span class="material-symbols-outlined pe-2">sell</span>
-    <?php echo ($tag); ?>
-    <!-- <span class="material-symbols-outlined ms-1" onclick="load()">
-      close
-    </span> -->
-  </a>
-</div>
-<span class="ps-2" style="opacity:70%"><?php 
-if(!empty($questions)) { 
-  echo count($questions); 
-  
-}
-  ?> 
-  questions</span>
-
 
 <?php
+if(!empty($hashtags)) { 
+    echo ('<h6 style="opacity:70%" class="d-flex align-items-center ps-3 pt-2">'.count($hashtags).' Hashtags </h6>');
+
+    ?>
+    <div class="hashtags ms-3">
+    <?php foreach ($hashtags as $tag) {
+          $urlEncode=urlencode($tag['name']); 
+          echo ('<a href="hashtag.php?tag=' . $urlEncode . '" class="badge badge-danger ms-2">' . $tag['name'] . '</a>');
+        
+
+      
+    } ?>
+    </div>
+    <?php
+}
+
+
+
+
+
+
+if(!empty($users)) { 
+    echo ('<h6 style="opacity:70%" class="d-flex align-items-center ps-3 pt-2">'.count($users).' Users </h6>');
+    ?> 
+    <div class="px-3 users">
+
+        <?php
+    foreach($users as $user) { 
+        ?> 
+        <div class='ms-4'>
+            <div class="row user mb-3">
+                <!-- phần avartar -->
+                <div class="col-1 ps-0">
+                    <div class="avatarQuestion avatar">
+                        <a href="personal-info.php?user=<?php echo($user['username']) ?>&page=answered"  class="avatar"><img class='avt' src="<?php 
+              if (!empty($user['avatar'])) {
+                  echo ('avatar/' . $user['avatar']);
+                } else {
+                    echo ('avatar/default.png');
+                }?>" alt="" srcset="">
+          </a>
+        </div>
+        
+    </div>
+    <!-- phần họ tên -->
+    <div class="col-10 p-0">
+        <div class="authorQuestion">
+            <?php
+          echo ('<div class="mb-0">'.ucwords($user["lastname"] . " " . $user["firstname"].'</div>'));
+          echo('<div><i class="text-sm">@'.$user['username'].'</i></div>'); 
+          
+          ?>
+          </div>
+            </div>
+        </div>
+    </div>
+        <?php
+
+}
+?>
+</div>
+<?php
+}
+
+
+if (!empty($questions)) {
+    echo ('<h6 style="opacity:70%" class="d-flex align-items-center ps-3 pt-2">'.count($questions).' Questions found</h6>');
+    
+}
 foreach ($questions as $question) { ?>
 
   <div class="questionBlock mb-2" id="idQuestion<?php echo ($question["id"]); ?>">
     <div class="row infoQuestion mb-3">
       <!-- phần avartar -->
-      <div class="col-1">
+      <div class="col-1 ps-0">
         <div class="avatarQuestion">
+          <a href="personal-info.php?user=<?php echo($question['author']) ?>&page=answered"  class="avatar"><img class='avt' src="<?php 
           
-          <img src="avatar/<?php 
-          $user=$userModule->getUserByUsername($question['author']);
-           echo($user['avatar']); ?>" alt="" srcset="">
+              $user = $userModule->getUserByUsername($question["author"]);
+              if (!empty($user['avatar'])) {
+                echo ('avatar/' . $user['avatar']);
+              } else {
+                echo ('images/default.png');
 
+              }
+        ?>" alt="" srcset="">
+          </a>
         </div>
 
       </div>
@@ -53,9 +109,9 @@ foreach ($questions as $question) { ?>
       </div>
       <!-- phần nút like, share -->
       <div class="col-1">
-        <img width="23" height="23" src="https://img.icons8.com/ios/50/forward-arrow.png" alt="forward-arrow" />
+        <!-- <img width="23" height="23" src="https://img.icons8.com/ios/50/forward-arrow.png" alt="forward-arrow" /> -->
         <img width="24" height="24" src="https://img.icons8.com/windows/50/<?php
-        if ( !empty($markedQuestions) && in_array($question['id'], explode(',', $markedQuestions["questions"]))) {
+        if (!empty($markedQuestions) && in_array($question['id'], explode(',', $markedQuestions["questions"]))) {
           echo ("filled-bookmark-ribbon");
         } else {
           echo ("bookmark-ribbon--v1");
@@ -80,12 +136,15 @@ foreach ($questions as $question) { ?>
     <!-- IMGs -->
     <div class="imgsQuestion mb-1 mt-4 ms-3 d-flex overflow-auto">
       <?php
-      for ($i = 0; $i < count($imagesList); $i++) {
-        //  echo($imagesList[$i]['imgs']$question['id']);
-        if ($imagesList[$i]['id_question_answer'] === $question['id']) {
-          $srcImgs = explode(',', $imagesList[$i]['imgs']);
-          foreach ($srcImgs as $srcImg) {
-            echo ('<a class="imgsList"><img class="imgsList" src="' . 'images/' . $srcImg . '"></a>');
+      if (!empty($imagesList)) {
+        for ($i = 0; $i < count($imagesList); $i++) {
+          //  echo($imagesList[$i]['imgs']$question['id']);
+          if ($imagesList[$i]['id_question_answer'] === $question['id']) {
+            $srcImgs = explode(',', $imagesList[$i]['imgs']);
+            foreach ($srcImgs as $srcImg) {
+              echo ('<a class="imgsListContain thumbnail fancybox" rel="' . $question['id'] . '" href="images/' . $srcImg . '" data-fancybox="images" data-caption="Image 1" ><img class="imgsList img-responsive" src="' . 'images/' . $srcImg . '"></a>');
+            }
+
           }
 
         }
@@ -98,26 +157,32 @@ foreach ($questions as $question) { ?>
 
     </div>
     <!-- Hashtags -->
+    <div class="hashtags">
     <?php foreach ($tagsOfQuestions as $arr) {
-      if ($question["id"] == $arr["id_question"]) {
-        $arrTags = explode(',', $arr["tags"]);
+    if ($question["id"] == $arr["id_question"]) {
+      $arrTags = explode(',', $arr["tags"]);
         foreach ($arrTags as $tag) {
-          $urlEncode=urlencode($tag);
+          $urlEncode=urlencode($tag); 
           echo ('<a href="hashtag.php?tag=' . $urlEncode . '" class="badge badge-danger me-1">' . $tag . '</a>');
-        
         }
 
       }
     } ?>
+    </div>
 
     <!-- Vote -->
     <div class="featureQuestion mt-4" id="updownvote<?php echo ($question['id']); ?>">
       <button class="btn btn-outline-purple-nohover py-1 d-inline btnsUpVote <?php
-      //Kiểm tra nếu người dùng đã vote thì hiện trạng thái  
+      //Kiểm tra nếu người dùng đã vote thì hiện trạng thái
       if (in_array($question["id"], explode(',', $upVotedQuestions))) {
         echo ("active");
       }
-      ?>" data-id-question="<?php echo ($question["id"]); ?>">
+      ?>" data-id-question="<?php echo ($question["id"]); ?>" <?php
+      if (empty($_SESSION['username'])) {
+        echo ('data-bs-toggle="modal" data-bs-target="#sign-in"');
+
+      }
+      ?>>
         <p class="m-0"><i class="fa fa-angle-up text-purple" aria-hidden="true"></i>
           Upvote <span class="upvoteValue">
             <?php
@@ -133,7 +198,12 @@ foreach ($questions as $question) { ?>
       if (in_array($question["id"], explode(',', $downVotedQuestions))) {
         echo ("active");
       }
-      ?>" data-id-question="<?php echo ($question["id"]); ?>">
+      ?>" data-id-question="<?php echo ($question["id"]); ?>" <?php
+      if (empty($_SESSION['username'])) {
+        echo ('data-bs-toggle="modal" data-bs-target="#sign-in"');
+
+      }
+      ?>>
         <p class="m-0"><i class="fa fa-angle-down text-purple " aria-hidden="true"></i>
         </p>
 
@@ -146,17 +216,6 @@ foreach ($questions as $question) { ?>
   </div>
 
 <?php } ?>
-
-<?php 
-  if(empty($questions)) { 
-    echo('<div id="notify-center" class="d-flex me-2">
-    <span class="material-symbols-outlined">
-sentiment_dissatisfied
-</span>No questions available</div>'); 
-  }
-
-?> 
-
 <!-- ấn để hiển thị trả lời câu hỏi -->
 <div class="modal fade" id="showAnswer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id="idDialogAnswer">
@@ -171,8 +230,8 @@ sentiment_dissatisfied
           <div class="row infoQuestion mb-3">
             <!-- phần avartar -->
             <div class="col-1">
-              <div id="idAvatarQuestion" class="avatarQuestion">
-
+              <div  class="avatarQuestion">
+                <img src="images/default.png" alt="err" id='idAvatarQuestion'>
               </div>
 
             </div>
@@ -189,33 +248,42 @@ sentiment_dissatisfied
           <h5 id="idHeadingQuestion" class="contentQuestion px-1">
             text default
           </h5>
+          <div id="imgQuestion" class='imgsQuestion d-flex overflow-auto'>
+
+          </div>
+        
+          <div id="idHashtags" class='mt-1'>
+
+          </div>
           <!-- Vote -->
           <div class="featureQuestion mt-4 ms-2" id="updownvote<?php echo ($question['id']); ?>">
-            <button class="btn btn-outline-purple-nohover py-1 d-inline btnsUpVote">
+            <button class="btn btn-outline-purple-nohover py-1 d-inline btnsUpVote" id='idUpvoteQuestion'>
               <p class="m-0"><i class="fa fa-angle-up text-purple" aria-hidden="true"></i>
-                Upvote <span id="upvoteValue">0</span></p>
+                Upvote <span id="upvoteValueModal">0</span></p>
             </button>
-            <button class="btn btn-outline-purple-nohover py-1 btnsDownVote">
+            <button class="btn btn-outline-purple-nohover py-1 btnsDownVote" id='idDownvoteQuestion'>
               <p class="m-0"><i class="fa fa-angle-down text-purple " aria-hidden="true"></i>
               </p>
             </button>
           </div>
         </div>
         <hr>
+        <textarea name="inputAnswer" id="inputAnswer" rows="2" class="p-0 summernote"></textarea>
         <div class="ms-3" id="answersForQuestion">
+          
+          </div>
+          
+        </div>
+        
+        <div class ="modal-footer row justify-content-end" contenteditable="true">
+        <div class="col-9">
 
         </div>
-
-      </div>
-
-      <div class="modal-footer row justify-content-start">
-        <div class="col-10 ms-1">
-          <textarea name="inputAnswer" id="inputAnswer" rows="2" class="p-0"></textarea>
-        </div>
-        <div class="col-1">
+        <div class="col-2">
           <button type="button" class="btn btn-bg-blue" id="idBtnAnswer">Answer</button>
 
-        </div>
+        </div>  
+        
       </div>
     </div>
   </div>

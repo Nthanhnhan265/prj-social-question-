@@ -18,10 +18,12 @@ const pathIcons8 = "https://img.icons8.com/windows/50/";
 const idHiddenQuestion=document.querySelector('#idHiddenQuestion');
 const idHiddenAnswer=document.querySelector('#idHiddenAnswer');
 const btnsDelete=document.querySelectorAll('.btns-delete');
-const btnsEdit=document.querySelectorAll('btns-edit'); 
+const btnsEditQuestion=document.querySelectorAll('.btns-edit'); 
 const btnsDeleteAnswer=document.querySelectorAll('.btns-deleteAnswer'); 
 const btnsEditAnswer=document.querySelectorAll('.btns-editAnswer'); 
-
+const idEditAnswer=document.querySelector('#idEditAnswer');
+let tempContent; 
+// const inputAnswer=document.querySelector('.summernote'); 
 // alert(btnsBookmark); 
 //duyệt for cho nút Upvote 
 
@@ -48,9 +50,9 @@ btnsUpVote.forEach((element, index) => {
                 //check trạng thái của respone
                 if (implement.ok) {
                     const data = await implement.json();
-                    alert(); 
+                    // alert(); 
                     //gán nội dung của nút vote bằng giá trị repsone từ chuỗi gửi từ server 
-                    if(Number.isInteger($data['upvote'])) { 
+                    if(Number.isInteger(data['upvote'])) { 
 
                         element.querySelector(".upvoteValue").textContent = `${data['upvote']}`;
                     }
@@ -154,6 +156,27 @@ btnsDeleteAnswer.forEach(element=>{
     element.addEventListener('click',()=>{ 
         idHiddenAnswer.value=element.getAttribute('data-id-answer');
         // alert(element.getAttribute('data-id-answer'));
+    }); 
+}); 
+
+//edit 
+btnsEditQuestion.forEach(element=>{
+    element.addEventListener('click',()=>{ 
+        const idEditQuestion=document.querySelector('#idEditQuestion'); 
+        idEditQuestion.value=element.getAttribute('data-id-question');
+
+        //Tải thông tin lên modal 
+        const questionInfo=document.querySelector('#idQuestion'+element.getAttribute('data-id-question'));
+        const tags=questionInfo.querySelectorAll('.tags');
+        let string="";
+        tags.forEach(element => {
+            string+=element.textContent.trim()+",";
+        });
+        string=string.slice(0,-1); 
+        
+        document.querySelector('#contentModal').textContent=questionInfo.querySelector('.contentQuestion').textContent.trim();
+        document.querySelector('#hashtagsEdit').value=string;
+
     }); 
 }); 
 
