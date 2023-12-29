@@ -1,7 +1,14 @@
 <?php 
 class HashTag extends Database { 
 
+    //search 
+    public function search ($string) {
+        $string="%$string%";  
+        $sql=parent::$connection->prepare("select * from hashtags where name like ? ");
+        $sql->bind_param("s",$string);  
+        return parent::select($sql);  
 
+    }
     
     // PHương thức lấy tất cả tags trong trang
     public function getTagsInPage($startPage,$perPage) { 
