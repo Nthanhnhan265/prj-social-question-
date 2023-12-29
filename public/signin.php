@@ -14,8 +14,8 @@ if (empty($_POST["username"]) || empty($_POST["password"])) {
   $user = $userModule->SignIn($username);
   if (!empty($user)) {
     if (password_verify($password, $user["password"])) {
-      setcookie("username", $username, time() + 86400 * 30);
-      setcookie("password", $user["password"], time() + 86400 * 30);
+      setcookie("username", $username, time() + 86400 * 30,"/");
+      setcookie("password", $user["password"], time() + 86400 * 30,"/");
       $_SESSION["username"] = $username;
       $_SESSION["avt"] = $userModule->getAvatarByUsername($username);
       // echo '<script>alert("Đăng nhập thành công!"); window.location.href="./index.php";</script>';

@@ -6,7 +6,7 @@ $user=$userModule->getUserByUsername($_SESSION['username']);
 
 $data=[ 
     "title"=>"Home", 
-    "slot"=>"this is feature" , 
+    "slot"=>"" , 
     "slot2"=>$template->Render("edit-user",["user"=>$user])
 ]; 
 

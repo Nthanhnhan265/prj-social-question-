@@ -165,6 +165,21 @@ class Vote extends Database {
         }
         return true;
     }
+
+     //Phương thức xóa vote lien quan den cau tra loi
+     public function deleteVotesOfAnswer($id_answer) { 
+        try {
+            $sql=parent::$connection->prepare("DELETE FROM `vote_answer` WHERE id_answer =?");
+            $sql->bind_param("i",$id_answer); 
+            $sql->execute(); 
+        } catch (Throwable $th) {
+            echo("Có lỗi xảy ra trong Vote/deleteVotesOfAnswer: ".$th); 
+            return false; 
+        }
+        return true;
+    }
+
+
     //Phương thức sửa vote 
     public function editVoteAnswer($id_answer,$username,$type) { 
         try {

@@ -30,8 +30,8 @@
       <div class="row row-none">
         <div class="col-sm-2">
           <!-- Logo  -->
-          <div id="nav-logo">
-            <a href="admin.php" class="text-decoration-none">Askany</a>
+          <div id="nav-logo-admin">
+            <a href="admin.php" class="text-decoration-none text-white">Askany</a>
           </div>
         </div>
         <div class="col-sm-9">
@@ -79,7 +79,14 @@
                     </span>
                   </a>
                 </li>
-
+                <!-- Trở về home -->
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="../public/index.php">
+                    <span class="ms-2 fa material-symbols-outlined">
+                      logout
+                    </span>
+                  </a>
+                </li>
               </ul>
               <!-- <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -95,15 +102,12 @@
             <?php if (!empty($_SESSION['username'])) {
               $userAdmin = (new User())->getUserByUsername($_SESSION['username']);
               if (!empty($userAdmin['avatar'])) {
-                echo ('<img src="../public/images/' . $userAdmin['avatar'] . '" class="ms-3 avatar" alt="">');
+                echo ('<img src="../public/avatar/' . $userAdmin['avatar'] . '" class="ms-3 avatar" alt="">');
+              } else {
+                echo ('<img src="../public/avatar/default.png" class="ms-3 avatar" alt="">');
               }
-              else { 
-                echo ('<img src="../public/images/default.png" class="ms-3 avatar" alt="">');
-              }
-              echo('<p class="mb-0">Hi! '.ucwords ($userAdmin['lastname'] .' ' .$userAdmin['firstname']).'</p>');
-              echo('<a href="../public/index.php"><span class="ms-2 fa material-symbols-outlined">
-              logout
-              </span></a>'); 
+              echo ('<p class="mb-0" style="font-size:15px">Hi! ' . ucwords($userAdmin['lastname'] . ' ' . $userAdmin['firstname']) . '</p>');
+              echo ('<a href="../public/index.php"></a>');
 
 
 

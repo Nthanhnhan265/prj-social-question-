@@ -1,85 +1,106 @@
-<div class="container">
-    <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 edit_information">
-        <form action="update.php" method="POST">
-            <h3 class="text-center">Edit Personal Information</h3>
-            <div class="row">
-                <div class="text-center">
-                    <div class="form-group">
-                        <!-- Hiển thị ảnh đại diện -->
-                        <img src="../public/avatar/Screenshot 2023-12-26 020145.png" style="width: 20px; height: 20px; border-radius: 50%" alt="">
-                        <h2><label class="profile_details_text"><?php echo $user['username']?></label> </h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="form-group">
-                        <label class="profile_details_text">First Name:</label>
-                        <!-- Trường nhập thông tin First Name -->
-                        <input type="text" name="firstname" id="firstname" class="form-control" value="<?php echo $user['firstname']?>" required>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="form-group">
-                        <label class="profile_details_text">Last Name: </label>
-                        <!-- Trường nhập thông tin Last Name -->
-                        <input type="text" name="lastname" id="lastname" class="form-control" value="<?php echo $user['lastname']?>" required>
-                    </div>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group">
-                        <label class="profile_details_text">Description</label>
-                        <!-- Trường nhập thông tin Description -->
-                        <input type="text" name="description" id="description" class="form-control" value="<?php echo $user['description']?>" required>
-                    </div>
-                </div>
-            </div>
-				
-				<!-- <div class="row">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="form-group">
-							<label class="profile_details_text">Nhập Mật Khẩu Hiện Tại:</label>
-							<input type="password" name="password" id="password" class="form-control" value="" required>
-						</div>
+<div class="" style="border-radius:6px">
+	<div class=" px-4 mb-2 bg-white pb-2 pt-3 mt-2 edit_information ">
+		<h6 class="d-flex align-items-center"><span class="pe-2 material-symbols-outlined">
+edit
+</span>Edit your information</h6>
+		<form action="edit-user-info.php" class="d-flex justify-content-center" method="POST" enctype="multipart/form-data">
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<div class="form-group">
+						<label class="profile_details_text">First Name:</label>
+						<input type="text" name="firstname" class="form-control"
+						value="<?php echo $user['firstname'] ?>" required>
+					</div>
+					<input type="hidden" name="old-avatar" id='old-avatar' class="form-control" value="<?php echo($user['avatar']); ?>">
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<div class="form-group">
+						<label class="profile_details_text">Last Name: </label>
+						<input type="text" name="lastname" class="form-control" value="<?php echo $user['lastname'] ?>"
+							required>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="">
 						<div class="form-group">
-							<label class="profile_details_text">Nhập Mật Khẩu Mới:</label>
-							<input type="password" name="newpassword" id="newpassword" class="form-control" value="" required>
+
+							<label class="profile_details_text">Description: </label>
+							<textarea name="description" id="description" cols="30" rows="2" class='px-2'><?php echo $user['description']?></textarea>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group col-6">
+							<label class="profile_details_text">Avatar </label>
+							<input type="file" name="avatar" class="form-control"
+						>
+						</div>
+						<div class="form-group col-6 mt-4 d-flex">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 d-flex justify-content-end">
+								<input type="submit" class="btn btn-success" value="Submit">
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="form-group">
-							<label class="profile_details_text">Nhập Lại Mật Khẩu Mới:</label>
-							<input type="password" name="repassword" id="repassword" class="form-control" value="" required>
-						</div>
-					</div>
-				</div> -->
 
-            <div class="mb-3 px-2">
-                <label for="" class="form-label text-purple">Choose Your Avatar</label>
-                <!-- Trường chọn file Avatar -->
-                <input type="file" id="avt_regis" name="avt" class="form-control">
-                <div id="error_avt_regis" style="color: red;"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submit">
-                    <div class="form-group">
-                        <!-- Nút Submit để cập nhật thông tin -->
-                        <input type="submit" class="btn btn-success" id="submit" name="submit" value="Submit">
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+				<div class="row pt-2">
+				</div>
+		</form>
+	</div>
 </div>
 
-			
+
+
+<!-- 
+
+<div class="bg-white mt-3 container py-2 px-4" style="border-radius:6px">
+<h6 class="d-flex align-items-center">
+<span class="pe-2 material-symbols-outlined">
+build
+</span>
+Change your Password</h6>
+
+<form action="" method="POST">
+		<div class="row">
+
+			<div class="col-6">
+				<div class="form-group">
+					<label class="profile_details_text">Old Password </label>
+					<input type="text" name="last_name" class="form-control" value="<?php echo $user['lastname'] ?>"
+						required>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+
+			<div class="col-6">
+				<div class="form-group">
+					<label class="profile_details_text">Confirm Password</label>
+					<input type="text" name="last_name" class="form-control" value="<?php echo $user['lastname'] ?>"
+						required>
+				</div>
+			</div>
+
+			<div class="col-6">
+				<div class="form-group">
+					<label class="profile_details_text">Confirm Password</label>
+					<input type="text" name="last_name" class="form-control" value="<?php echo $user['lastname'] ?>"
+						required>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row pt-2">
+			<div class="col-6"></div>
+			<div class="col-6 d-flex justify-content-end">
+				<div class="form-group me-5 pb-2">
+					<input type="submit" class="btn btn-success" value="Change Password">
+				</div>
+			</div>
+		</div>
+	</form>
+</div> -->
+</div>
+

@@ -3,7 +3,7 @@ class Answer extends Database {
 
     //Phương thức lấy tất cả câu trả lời của người dùng 
     public function getAllAnswersByUser($username) {
-        $sql=parent::$connection->prepare("SELECT answers.*, questions.id,questions.content as question, users.lastname,users.firstname,users.avatar FROM `answers` INNER JOIN questions on answers.id_question=questions.id INNER JOIN users on users.username=answers.author where answers.author=?;
+        $sql=parent::$connection->prepare("SELECT answers.*, questions.id,questions.content as question, users.lastname,users.firstname,users.avatar FROM `answers` INNER JOIN questions on answers.id_question=questions.id INNER JOIN users on users.username=answers.author where answers.author=? order by answers.id_answer desc;
         ");
         $sql->bind_param('s',$username);
         return parent::select($sql);  
@@ -28,7 +28,7 @@ class Answer extends Database {
     //Phương thức hiển thị tất cả trả lời của một câu hỏi khi người dùng đã đăng nhập
     public function getAllAnswersByQuestion($username, $id) { 
         $sql=parent::$connection->prepare("
-        SELECT questions.id as id_question, answers.*,users.firstname, users.lastname,user_voted_answer.type
+        SELECT questions.id as id_question, answers.*,users.firstname, users.lastname,users.avatar,user_voted_answer.type
         from questions
         INNER JOIN answers 
         ON questions.id=answers.id_question 
@@ -47,7 +47,7 @@ class Answer extends Database {
     //Phương thức hiển thị tất cả trả lời của một câu hỏi khi người dùng chưa đăng nhập
     public function getAllAnswersByQuestionWithoutSignIn($id) { 
         $sql=parent::$connection->prepare("
-        SELECT questions.id as id_question, answers.*,users.firstname, users.lastname
+        SELECT questions.id as id_question, answers.*,users.firstname, users.lastname, users.avatar
         from questions
         INNER JOIN answers 
         ON questions.id=answers.id_question 
@@ -89,10 +89,26 @@ class Answer extends Database {
         }
         return true;
     }
+
+    //
+    //Phương thức xóa câu trả lời cua cau hoi
+    public function deleteAnswersOfQuestion($id_question) { 
+        try {
+            $sql=parent::$connection->prepare("delete from answers where id_question=?");
+            $sql->bind_param("i",$id); 
+            $sql->execute(); 
+        } catch (Throwable $th) {
+            echo("Có lỗi xảy ra trong Question/deleteAnswer: ".$th); 
+            return false; 
+        }
+        return true;
+    }
+
+    //
     //Phương thức sửa câu trả lời 
     public function editAnswer($content,$edited_at,$status,$id_answer) { 
         try {
-            $sql=parent::$connection->prepare("UPDATE `answers` SET `content`=?,`edited_at`=?,`status`=? where `id_question`=?");
+            $sql=parent::$connection->prepare("UPDATE `answers` SET `content`=?,`edited_at`=?,`status`=? where `id_answer`=?");
             $sql->bind_param("sssi",$content,$edited_at,$status,$id_answer); 
             $sql->execute(); 
         } catch (Throwable $th) {

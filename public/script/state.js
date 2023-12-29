@@ -1,5 +1,5 @@
 /*
-State of buttons, icons etc 
+State of buttons, icons etc .
 
 */
 //phương thức truyền vào url,data để gửi về server, return promise 
@@ -15,8 +15,18 @@ const btnsUpVote = document.querySelectorAll(".btnsUpVote");
 const btnsDownVote = document.querySelectorAll(".btnsDownVote");
 const btnsBookmark = document.querySelectorAll(".btnsBookmark");
 const pathIcons8 = "https://img.icons8.com/windows/50/";
+const idHiddenQuestion=document.querySelector('#idHiddenQuestion');
+const idHiddenAnswer=document.querySelector('#idHiddenAnswer');
+const btnsDelete=document.querySelectorAll('.btns-delete');
+const btnsEditQuestion=document.querySelectorAll('.btns-edit'); 
+const btnsDeleteAnswer=document.querySelectorAll('.btns-deleteAnswer'); 
+const btnsEditAnswer=document.querySelectorAll('.btns-editAnswer'); 
+const idEditAnswer=document.querySelector('#idEditAnswer');
+let tempContent; 
+// const inputAnswer=document.querySelector('.summernote'); 
 // alert(btnsBookmark); 
 //duyệt for cho nút Upvote 
+
 btnsUpVote.forEach((element, index) => {
     element.addEventListener('click', () => {
         //thêm class vào nút hiện tại để thay nền 
@@ -40,8 +50,12 @@ btnsUpVote.forEach((element, index) => {
                 //check trạng thái của respone
                 if (implement.ok) {
                     const data = await implement.json();
+                    // alert(); 
                     //gán nội dung của nút vote bằng giá trị repsone từ chuỗi gửi từ server 
-                    element.querySelector(".upvoteValue").textContent = `${data['upvote']}`;
+                    if(Number.isInteger(data['upvote'])) { 
+
+                        element.querySelector(".upvoteValue").textContent = `${data['upvote']}`;
+                    }
                 } else {
                     throw new Error("Thất bại!");
                 }
@@ -127,3 +141,43 @@ btnsBookmark.forEach(element => {
         Process();
     });
 });
+ 
+//bắt sự kiện nút xóa và thay đổi giá trị cho value trong modal 
+btnsDelete.forEach(element=>{
+    element.addEventListener('click',()=>{ 
+        //k nen lam the nay
+        idHiddenQuestion.value=element.getAttribute('data-id-question');
+
+    }); 
+});
+// console.log(btnsDeleteAnswer); 
+//bắt sự kiện nút xóa và thay đổi giá trị cho value trong modal 
+btnsDeleteAnswer.forEach(element=>{
+    element.addEventListener('click',()=>{ 
+        idHiddenAnswer.value=element.getAttribute('data-id-answer');
+        // alert(element.getAttribute('data-id-answer'));
+    }); 
+}); 
+
+//edit 
+btnsEditQuestion.forEach(element=>{
+    element.addEventListener('click',()=>{ 
+        const idEditQuestion=document.querySelector('#idEditQuestion'); 
+        idEditQuestion.value=element.getAttribute('data-id-question');
+
+        //Tải thông tin lên modal 
+        const questionInfo=document.querySelector('#idQuestion'+element.getAttribute('data-id-question'));
+        const tags=questionInfo.querySelectorAll('.tags');
+        let string="";
+        tags.forEach(element => {
+            string+=element.textContent.trim()+",";
+        });
+        string=string.slice(0,-1); 
+        
+        document.querySelector('#contentModal').textContent=questionInfo.querySelector('.contentQuestion').textContent.trim();
+        document.querySelector('#hashtagsEdit').value=string;
+
+    }); 
+}); 
+
+
