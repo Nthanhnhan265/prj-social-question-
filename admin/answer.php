@@ -30,5 +30,5 @@ if (!empty($_SESSION['username']) && $userModule->getUserByUsername($_SESSION['u
 
     $template->View("home-admin", $data);
 } else {
-    header('location: http://localhost/prj-social-question/public/index.php');
+    header('location: http://localhost/prj-social-question-/public/index.php');
 }

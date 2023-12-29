@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             setcookie("password", $user["password"], time() + 86400 * 30,"/");
             $_SESSION["username"] = $username;
             $_SESSION["avt"] = $userModule->getAvatarByUsername($username);
+            $_SESSION["role"] = $userModule->getRoleByUsername($username);
             echo 'Valid';
             // header('http://localhost/prj-social-question-/admin/'); 
         } else {

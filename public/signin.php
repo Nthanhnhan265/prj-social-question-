@@ -18,6 +18,8 @@ if (empty($_POST["username"]) || empty($_POST["password"])) {
       setcookie("password", $user["password"], time() + 86400 * 30,"/");
       $_SESSION["username"] = $username;
       $_SESSION["avt"] = $userModule->getAvatarByUsername($username);
+
+      
       // echo '<script>alert("Đăng nhập thành công!"); window.location.href="./index.php";</script>';
     } else {
       // header("location: ./index.php");

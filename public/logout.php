@@ -4,6 +4,8 @@ require("../config/config.php");
 if (isset($_SESSION['username'])) {
     unset($_SESSION['username']);
     unset($_SESSION["avt"]);
+    unset($_SESSION["role"]);
+
     setcookie('recentIDs','',time()-0,'/');
     setcookie('username','',time()-0,'/'); 
     setcookie('password','',time()-0,'/'); 

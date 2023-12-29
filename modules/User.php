@@ -22,14 +22,16 @@
             return false;
         }
         //Phương thức lấy tất cả users trong trang 
-        public function getUsersInPage($startPage,$perPage) { 
-            $sql=parent::$connection->prepare("SELECT * FROM USERS limit $startPage,$perPage");
-            return parent::select($sql ) ;
+        public function getUsersInPage($startPage, $perPage)
+        {
+            $sql = parent::$connection->prepare("SELECT * FROM USERS limit $startPage,$perPage");
+            return parent::select($sql);
         }
         //Phương thức lấy tất cả users 
-        public function getAllUsers() { 
-            $sql=parent::$connection->prepare("SELECT * FROM USERS");
-            return parent::select($sql ) ;
+        public function getAllUsers()
+        {
+            $sql = parent::$connection->prepare("SELECT * FROM USERS");
+            return parent::select($sql);
         }
         //Phương thức đăng kí tài khoản (Insert user mới vào trong DB)
         public function SignUp($username, $firstName, $lastName, $password, $joinAt, $avatar)
@@ -38,7 +40,7 @@
                 if ($this->CheckUser($username)) {
                     return false;
                 }
-                
+
                 $sql = parent::$connection->prepare("INSERT INTO `users`(`username`, `firstname`, `lastname`, `password`, `joined_at`, `avatar`) 
             VALUES (?,?,?,?,?,?)");
                 //mã hóa mật khẩu 
@@ -102,7 +104,91 @@
                 return false;
             }
         }
+
+
+        // Phương thức trả về role
+        public function getRoleByUsername($username)
+        {
+            try {
+                $sql = parent::$connection->prepare("SELECT role FROM USERS WHERE username=?");
+                $sql->bind_param("s", $username);
+                $result = parent::select($sql);
+                if (!empty($result)) {
+                    return $result[0]['role'];
+                }
+            } catch (\Throwable $th) {
+                echo ("Thất bại, có lỗi xảy ra trong Module/User/getRoleByUsername: " . $th);
+                return false;
+            }
+        }
+
+        // Phương thức xóa người dùng
+        public function deleteUserByUsername($username)
+        {
+            try {
+                // Kiểm tra xem tài khoản đang đăng nhập có trùng với tài khoản cần xóa hay không
+                if ($_SESSION['username'] == $username) {
+                    return false;
+                }
+                $sql = parent::$connection->prepare("DELETE FROM USERS WHERE username = ?");
+                $sql->bind_param("s", $username);
+                // Thực hiện truy vấn xóa
+                $success = $sql->execute();
+                if ($success) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (\Throwable $th) {
+                echo "Thất bại, có lỗi xảy ra trong Module/User/deleteUserByUsername: " . $th;
+                return false;
+            }
+        }
+
+        // Phương thức cập nhật thông tin người dùng
+        public function updateUserByUsername($username, $firstname, $lastname, $avatar)
+        {
+            try {
+                $sql = parent::$connection->prepare("UPDATE USERS SET firstname = ?, lastname = ?, avatar = ? WHERE username = ?");
+                $sql->bind_param("ssss", $firstname, $lastname, $avatar, $username);
+
+                // Thực hiện truy vấn cập nhật
+                $success = $sql->execute();
+
+                if ($success) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (\Throwable $th) {
+                echo "Thất bại, có lỗi xảy ra trong Module/User/updateUserByUsername: " . $th;
+                return false;
+            }
+        }
+
+        // Phương thức cập nhật thông tin người dùng, nhưng không cập nhật hình ảnh
+        public function updateUserByUsernameExistAvatar($username, $firstname, $lastname)
+        {
+            try {
+                $sql = parent::$connection->prepare("UPDATE USERS SET firstname = ?, lastname = ? WHERE username = ?");
+                $sql->bind_param("sss", $firstname, $lastname, $username);
+
+                // Thực hiện truy vấn cập nhật
+                $success = $sql->execute();
+
+                if ($success) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (\Throwable $th) {
+                echo "Thất bại, có lỗi xảy ra trong Module/User/updateUserByUsernameExistAvatar: " . $th;
+                return false;
+            }
+        }
     }
+
+
 
 
     function set_message($msg)
@@ -113,7 +199,6 @@
             $msg = "";
         }
     }
-
 
     // Display Message
     function display_message()
@@ -129,11 +214,6 @@
     {
         return "<p class='alert alert-danger text-center'>$error</p>";
     }
-
-
-    // $error = display_error("Please Fill in the Blank");
-
-    // set_message(display_error("Please Fill in the Blank"));
 
     // Sucess Message
     function display_success($success)

@@ -110,7 +110,6 @@
               echo ('<a href="../public/index.php"></a>');
 
 
-
             } ?>
 
             <!-- <button type="button" class="btn btn-outline-purple" data-bs-toggle="modal" data-bs-target="#sign-in">Sign
