@@ -131,18 +131,15 @@
           if (isset($_SESSION["username"])) {
             ?>
             <div id="nav-login">
-              <img src="../public/avatar/<?php
-              if (!empty($_SESSION['avt'])) {
-                echo $_SESSION["avt"];
-              } else {
-                echo ("default.png");
-              }
-              ?>" style="width: 40px; height: auto; border-radius: 50%" alt="">
+              <img src="../public/avatar/<?php echo $_SESSION["avt"]; ?>" style="width: 20px; height: 20px; border-radius: 50%" alt="">
+              <a href="../public/personal-info.php">
+
               <button type="button" class="btn btn-outline-purple" data-bs-toggle="modal" data-bs-target="">
                 <?php
                 echo $_SESSION["username"];
-                ?>
+                ?> 
               </button>
+              </a>
               <button type="button" class="btn btn-outline-blue" data-bs-toggle="modal" data-bs-target="">
                 <a href="logout.php" style="text-decoration: none;">Log out</a>
               </button>
@@ -158,11 +155,7 @@
             </div>
             <?php
           }
-
-
           ?>
-
-
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+
 <div class="" style="border-radius:6px">
 	<div class=" px-4 mb-2 bg-white pb-2 pt-3 mt-2 edit_information ">
 		<h6 class="d-flex align-items-center"><span class="pe-2 material-symbols-outlined">
@@ -23,6 +24,7 @@ edit
 				<div class="row">
 					<div class="">
 						<div class="form-group">
+
 							<label class="profile_details_text">Description: </label>
 							<textarea name="description" id="description" cols="30" rows="2" class='px-2'><?php echo $user['description']?></textarea>
 						</div>
@@ -101,3 +103,4 @@ Change your Password</h6>
 	</form>
 </div> -->
 </div>
+
