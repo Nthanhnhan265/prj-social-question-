@@ -15,22 +15,29 @@
                     echo (date_format($date, "d/m/Y")); ?>
                 </p>
             </div>
-            <div class="col-sm-2 text-center">
+            <div class="col-sm-2 text-end pe-2">
                 <!-- <button type="button" class="btn btn-outline-blue" data-bs-toggle="modal" data-bs-target=""> -->
                 <?php 
                 if(!empty($_SESSION['username']) && $user['username']==$_SESSION['username']) { 
-                    echo('<a href="user.php" style="text-decoration: none;">Chinh sua</a>');}
+                    echo('<a href="user.php" class="text-none-color" style="text-decoration: none;"><span class="material-symbols-outlined">
+                    settings
+                    </span></a>');}
                 ?>    
             </div>
         </div>
     </div>
-    <div class="description mt-1 container-fluid">
-        <h6>Description</h6>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam officiis et, quo voluptatum nesciunt labore
-        fuga deleniti vero, eveniet odio fugit beatae sapiente rem unde. Aliquam maiores fuga obcaecati sint!
-    </div>
-
-    <div class="feature mt-5">
+   <?php if(!empty($user['description'])) { 
+        echo('<h6 style="opacity:70%">Description</h6>
+        '.'<div class="description mt-0 ps-0 container-fluid" style="font-size:13px">
+            '.$user['description'].'
+        </div>'); 
+    }else { 
+        echo('<h6 style="opacity:55%">No description</h6>
+        ');
+    }
+    ?>
+    
+    <div class="feature mt-4">
         <div class="d-flex justify-content-around">
             <h6 class='list px-3 py-2 <?php
             if (!empty($_GET['page']) && $page == 'answered') {
@@ -79,7 +86,7 @@
                         </div>
                         '.( !empty($_SESSION['username']) && $user['username']==$_SESSION['username']?'
                         <div class="col-2 d-flex justify-content-end"> 
-                        <button class="btn btns-edit" data-toggle="modal" data-target="#">
+                        <button class="btn btns-edit" data-id-answer='.$answer['id_answer'].' data-toggle="modal" data-target="#edit-answer">
                             <span class="text-none-color material-symbols-outlined btns-editAnswer">
                             edit
                             </span>
@@ -93,7 +100,7 @@
                         </div>
                         ':'').'
                         <!--  CONTENT -->
-                        <div class="contentAnswer pt-1 ps-4">
+                        <div class="contentAnswer pt-1 ps-4" id="answer'.$answer['id_answer'].'">
                            ' . $answer['content'] . '
                         </div>
                         <!-- Vote -->
@@ -157,7 +164,7 @@
                     <!-- phần nút xoa, chinh sua -->
                     <div class="col-1 d-flex">
                         <?php if(!empty($_SESSION['username'])&&$user['username'] == $_SESSION['username']){?>
-                            <button type="button" class="btn p-0 btns-edit" data-id-question="<?php echo($question['id']);  ?>" data-toggle="modal" data-target="#">
+                            <button type="button" class="btn p-0 btns-edit" data-id-question="<?php echo($question['id']);  ?>" data-toggle="modal" data-target="#editQuestion">
                                 <span class="text-none-color material-symbols-outlined">
                                   edit
                                 </span>
@@ -207,7 +214,7 @@
                     if ($question["id"] == $arr["id_question"]) {
                         $arrTags = explode(',', $arr["tags"]);
                         foreach ($arrTags as $tag) {
-                            echo ('<a href="hashtag.php?tag=' . $tag . '" class="badge badge-danger me-1">' . $tag . '</a>');
+                            echo ('<a href="hashtag.php?tag=' . $tag . '" class="badge badge-danger me-1 tags">' . $tag . '</a>');
                         }
 
                     }
@@ -513,12 +520,76 @@
         </div>
       </div>
     </div>
+    
+    <!-- ấn để chỉnh sửa answer  -->
+    <div class="modal" id="edit-answer"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title d-flex align-items-center"> <span class="text-none-color material-symbols-outlined">
+                                  edit
+                                </span> Edit</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form action="process/edit-answer.php" method="post">
+              <textarea name="inputAnswer" id="inputAnswerModal" rows="2" class="p-0 summernote"></textarea>
+              
+              </div>
+              <div class="modal-footer">
+                <input type="hidden" name='id_answer' id="idEditAnswer">
+
+                <button type="submit" class="btn btn-bg-blue" id="idBtnAnswer">Answer</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- ấn để chỉnh sửa question -->
+  <!-- Modal add question  -->
+  <div class="modal" id="editQuestion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <form action="process/edit-question.php" method="post" enctype="multipart/form-data">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+          <h5 class="modal-title d-flex align-items-center"> <span class="text-none-color material-symbols-outlined">
+                                  edit
+                                </span> Edit</h5>            
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" name="id" id="idEditQuestion">
+            <textarea name="content" id="contentModal" rows="5" placeholder="Type your question"></textarea>
+            <label for="imageInput">
+              <span class="material-symbols-outlined">
+                imagesmode
+              </span>
+
+            </label>
+            <input type="file" name="images[]" id="imageInputEdit" class="none" accept=".jpg, .png, .jpeg|image/*" multiple>
+            <hr>
+            <label for="hashtags" class="d-flex align-items-center pb-1">
+              <span class="material-symbols-outlined pe-2">sell</span>hashtags
+            </label>
+
+            <input type="text" name="hashtags" id="hashtagsEdit" style='width:100%'>
+
+          </div>
+          <div class="modal-footer">
+            <!--  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> -->
+            <button type="button" class="close btn btn-outline-purple" data-dismiss="modal"  ara-label='Close'>Cancel</button>
+            <button type="submit" class="btn btn-bg-blue">Edit question</button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
 
 </div>
-
-<script>
-$('#confirm-delete').on('shown.bs.modal', function () {
-  $('#confirm-delete').trigger('focus')
-})
-
-</script>

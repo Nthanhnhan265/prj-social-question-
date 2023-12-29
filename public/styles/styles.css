@@ -353,6 +353,9 @@ textarea {
 .dateQuestion  {
     font-size: var(--textSmSize);
 } 
+.text-sm  {
+    font-size: var(--textSmSize)!important;
+} 
 .dateAnswer  {
     border-radius: 5px;
     padding: 1px 2px;  
@@ -503,4 +506,9 @@ i {
 }
 #confirm-delete { 
     transition: all 5s;
+}
+.user { 
+    padding: 10px 0 10px 10px ; 
+    border-radius: var(--halfBorderRad); 
+    background-color: var(--backgroundComponent);
 }

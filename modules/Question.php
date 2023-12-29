@@ -2,6 +2,16 @@
 class Question extends Database
 {
 
+
+    //Search
+    public function seach($string) {
+        $string="%$string%";  
+        $sql=parent::$connection->prepare("select * from questions where content like ? ");
+        $sql->bind_param("s",$string);  
+        return parent::select($sql);  
+    
+    }
+
     //PHương thức lấy câu hỏi đã tạo bởi người dùng 
     public function getQuestionsByUser($username)
     {

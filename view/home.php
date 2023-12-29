@@ -13,7 +13,6 @@
   </title>
 
   <!-- Summbernote: do dùng bản cũ hơn nên cho load trước -->
-  <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -23,7 +22,6 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <!-- Fancybox CSS -->
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-
 </head>
 
 <body>
@@ -54,10 +52,10 @@
                   </a>
                 </li>
                 <!-- Di Chuyển Đến Trang xem thông báo -->
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a class="nav-link" href="<?php
                   //kiểm tra nếu người dùng chưa đăng nhập thì không cho di chuyển
-                  if (!empty($_SESSION['username'])) {
+                  /*if (!empty($_SESSION['username'])) {
                     echo ('../public/notification.php');
 
                   }
@@ -65,11 +63,11 @@
                   if (empty($_SESSION['username'])) {
                     echo ('data-bs-toggle="modal" data-bs-target="#sign-in"');
 
-                  }
+                  }*/
                   ?>><i class="fa fa-bell-o" aria-hidden="true"></i>
                     </i>
                   </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                   <a class="nav-link" href="<?php
                   //kiểm tra nếu người dùng chưa đăng nhập thì không cho di chuyển
@@ -120,9 +118,9 @@
 
                 ?>
               </ul>
-              <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+              <form class="d-flex" role="search" action='search.php' method='get'>
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='q'>
+                <button class="btn btn-outline-info" type="submit">Search</button>
               </form>
             </div>
           </div>
@@ -133,18 +131,15 @@
           if (isset($_SESSION["username"])) {
             ?>
             <div id="nav-login">
-              <img src="../public/avatar/<?php
-              if (!empty($_SESSION['avt'])) {
-                echo $_SESSION["avt"];
-              } else {
-                echo ("default.png");
-              }
-              ?>" style="width: 40px; height: auto; border-radius: 50%" alt="">
+              <img src="../public/avatar/<?php echo $_SESSION["avt"]; ?>" style="width: 20px; height: 20px; border-radius: 50%" alt="">
+              <a href="../public/personal-info.php">
+
               <button type="button" class="btn btn-outline-purple" data-bs-toggle="modal" data-bs-target="">
                 <?php
                 echo $_SESSION["username"];
-                ?>
+                ?> 
               </button>
+              </a>
               <button type="button" class="btn btn-outline-blue" data-bs-toggle="modal" data-bs-target="">
                 <a href="logout.php" style="text-decoration: none;">Log out</a>
               </button>
@@ -160,11 +155,7 @@
             </div>
             <?php
           }
-
-
           ?>
-
-
         </div>
       </div>
     </div>
@@ -365,46 +356,13 @@
     </div>
   </div>
 
-
-  <script src="script/app.js">
-  </script>
-  <script src="script/state.js"></script>
-  <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1/dist/es-module-shims.min.js"
-    crossorigin="anonymous"></script>
-  <script type="importmap">
-    {
-      "imports": {
-        "@popperjs/core": "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.min.js",
-        "bootstrap": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.esm.min.js"
-      }
-    }
-    </script>
-  <script type="module">
-    import * as bootstrap from 'bootstrap'
-
-    new bootstrap.Popover(document.getElementById('popoverButton'))
-  </script>
-
-  <script src="../public/script/jquery-3.2.1.min.js"></script>
-  <script src="../public/script/jQuery.js"></script>
-  <!-- Summernote -->
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-  <script type='text/javascript'>
-    $('.summernote').summernote({
-      placeholder: 'Enter your answer',
-      height: 100,
-
-    })
-  </script>
+  <script src="script/app.js"></script>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
   <script>
-    $(document).ready(function () {
+    var $=jQuery.noConflict(); 
+    $(document).ready(function ($) {
       //FANCYBOX
       //https://github.com/fancyapps/fancyBox
       $(".fancybox").fancybox({
@@ -414,8 +372,65 @@
 
       });
     });
+
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1/dist/es-module-shims.min.js"
+    crossorigin="anonymous"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "@popperjs/core": "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.min.js",
+        "bootstrap": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.esm.min.js"
+      }
+    }
+  </script>
+  <script type="module">
+    import * as bootstrap from 'bootstrap'
+
+    new bootstrap.Popover(document.getElementById('popoverButton'))
   </script>
 
+<!-- Summernote -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script type='text/javascript'>
+  var $x=jQuery.noConflict();
+  $x('.summernote').summernote({
+    placeholder: 'Enter your answer',
+    height: 100,
+    
+  })
+  
+  </script>
+  <script>
+    
+    const btnsEdit = document.querySelectorAll('.btns-edit');
+    btnsEdit.forEach(element => {
+      element.addEventListener('click', () => {
+        idEditAnswer.value = element.getAttribute('data-id-answer');
+        tempContent = document.querySelector('#answer' + element.getAttribute('data-id-answer')).textContent;
+        $x('#inputAnswerModal').summernote('code', tempContent);
+        
+      });
+    });
+    // load('ok')
+    </script>
+
+<script>
+  
+  </script>
+  <script>
+    
+    
+    
+    
+    </script>
+  <script src="script/state.js"></script>
+  <script src="../public/script/jquery-3.2.1.min.js"></script>
+  <script src="../public/script/jQuery.js"></script>
 </body>
 
 </html>
